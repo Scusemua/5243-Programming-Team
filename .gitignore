@@ -1,0 +1,10 @@
+.metadata/
+bin/
+build/
+dist/
+.classpath
+build.xml
+sysProps.xml
+build.properties
+.project
+
