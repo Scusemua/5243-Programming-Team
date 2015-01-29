@@ -9,9 +9,9 @@ import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.RobotDrive;
 
-import org.usfirst.frc.team5243.robot.commands.RobotCommand;
-import org.usfirst.frc.team5243.robot.subsystems.MotorSubsystem;
-import org.usfirst.frc.team5243.robot.subsystems.RobotSubsystem;
+import org.usfirst.frc.team5243.robot.commands.*;
+import org.usfirst.frc.team5243.robot.subsystems.*;
+import org.usfirst.frc.team5243.robot.triggers.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -25,6 +25,7 @@ public class Robot extends IterativeRobot {
 	public static final RobotSubsystem robotSubsystem = new RobotSubsystem();
 	public static OI oi = new OI();
 	private RobotDrive robot = new RobotDrive(1,2,3,4); //motor channels are parameters 
+	private StrafeCommand strafeCommand = new StrafeCommand();
 	
     Command autonomousCommand;
 
@@ -75,6 +76,8 @@ public class Robot extends IterativeRobot {
     public void teleopContinuous() {
         if (autonomousCommand != null) autonomousCommand.cancel();
         System.out.println("teleop running");
+        //OI.getLeftStrafeTrigger().whileHeld(strafeCommand);
+        OI.getRightStrafeTrigger().whileHeld(strafeCommand);
         robot.tankDrive(oi.getLeftStick(), oi.getRightStick());
         Timer.delay(0.01);
     }

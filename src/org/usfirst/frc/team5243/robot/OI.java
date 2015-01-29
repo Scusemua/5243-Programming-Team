@@ -1,7 +1,9 @@
 package org.usfirst.frc.team5243.robot;
 
 import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.Joystick;
+
 import org.usfirst.frc.team5243.robot.commands.RobotCommand;
 
 /**
@@ -17,7 +19,9 @@ public class OI {
     // Button button = new JoystickButton(stick, buttonNumber);
     private static Joystick leftStick = new Joystick(RobotMap.leftJoystick); 
     private static Joystick rightStick = new Joystick(RobotMap.rightJoystick);
-    
+	private static Button strafeTriggerLeft = new JoystickButton(leftStick, 1);
+	private static Button strafeTriggerRight = new JoystickButton(rightStick, 1);
+	
     // There are a few additional built in buttons you can use. Additionally,
     // by subclassing Button you can create custom triggers and bind those to
     // commands the same as any other Button.
@@ -38,13 +42,45 @@ public class OI {
     // until it is finished as determined by it's isFinished method.
     // button.whenReleased(new RobotCommand());
     
+	/*
+	 * Get the left joystick
+	 */
     public static Joystick getLeftStick() {
     	return leftStick;
     }
     
+    /*
+     * Get the right joystick 
+     */
     public static Joystick getRightStick() {
     	return rightStick;
     }
+    
+    /*
+     * Get the trigger on the LEFT joystick that allows for strafing 
+     */
+    public static Button getLeftStrafeTrigger() {
+    	return strafeTriggerLeft;
+    }
+    
+    /*
+     * Get the trigger on the RIGHT joystick that allows for strafing 
+     */
+    public static Button getRightStrafeTrigger() {
+    	return strafeTriggerRight;
+    }
 	
+    /* 
+     * This method checks if either the left trigger or right trigger is pressed. (The left trigger being the
+     * trigger button on the left joystick, the right trigger being the trigger button on the right joystick.)
+     * It returns true if either one is pressed or false if neither are pressed. 
+     */
+    public static boolean isPressed() {
+    	if(strafeTriggerLeft.get() || strafeTriggerRight.get()) {
+    		return true;
+    	} else {
+    		return false;
+    	}
+    }
 }
 
