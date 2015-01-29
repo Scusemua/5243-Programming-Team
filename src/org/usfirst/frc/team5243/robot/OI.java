@@ -15,10 +15,9 @@ public class OI {
     // number it is.
     // Joystick stick = new Joystick(port);
     // Button button = new JoystickButton(stick, buttonNumber);
-    private Joystick leftStick = new Joystick(1); 
-    private Joystick rightStick = new Joystick(2);
+    private static Joystick leftStick = new Joystick(RobotMap.leftJoystick); 
+    private static Joystick rightStick = new Joystick(RobotMap.rightJoystick);
     
-	
     // There are a few additional built in buttons you can use. Additionally,
     // by subclassing Button you can create custom triggers and bind those to
     // commands the same as any other Button.
@@ -39,11 +38,11 @@ public class OI {
     // until it is finished as determined by it's isFinished method.
     // button.whenReleased(new RobotCommand());
     
-    public Joystick getLeftStick() {
+    public static Joystick getLeftStick() {
     	return leftStick;
     }
     
-    public Joystick getRightStick() {
+    public static Joystick getRightStick() {
     	return rightStick;
     }
 	

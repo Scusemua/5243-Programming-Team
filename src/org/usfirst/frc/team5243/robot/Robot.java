@@ -41,9 +41,6 @@ public class Robot extends IterativeRobot {
         robot.setSafetyEnabled(false);
     }
 	
-	public void disabledPeriodic() {
-		Scheduler.getInstance().run();
-	}
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
@@ -70,6 +67,11 @@ public class Robot extends IterativeRobot {
 
     }
     
+    public void teleopPeriodic() {
+        Scheduler.getInstance().run();
+        
+    }
+    
     public void teleopContinuous() {
         if (autonomousCommand != null) autonomousCommand.cancel();
         System.out.println("teleop running");
@@ -77,12 +79,20 @@ public class Robot extends IterativeRobot {
         Timer.delay(0.01);
     }
 
+    
+    public void testInit() {
+    	
+    }
     /**
-     * This function is called periodically during operator control
+     * This function is called periodically during test mode
      */
-    public void teleopPeriodic() {
-        Scheduler.getInstance().run();
+    public void testPeriodic() {
+        LiveWindow.run();
         
+    }
+    
+    public void testContinuous() {
+    	
     }
     
     /**
@@ -93,15 +103,11 @@ public class Robot extends IterativeRobot {
     	
     }
     
-    /**
-     * This function is called periodically during test mode
-     */
-    public void testPeriodic() {
-        LiveWindow.run();
-        
-    }
-    
-    public void testInit() {
-    	
-    }
+	public void disabledPeriodic() {
+		Scheduler.getInstance().run();
+	}
+	
+	public void disabledContinuous(){
+		
+	}
 }
