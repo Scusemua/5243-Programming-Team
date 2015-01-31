@@ -1,7 +1,8 @@
 
 package org.usfirst.frc.team5243.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Jaguar;
+import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -12,16 +13,18 @@ public class MotorSubsystem extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	/*
-	 * The parameter in the Jaguar constructor is the channel number.
+	 * The parameter in the Talon constructor is the channel number.
 	 */
-	private Jaguar leftFront = new Jaguar(1); 
-	private Jaguar leftBack = new Jaguar(2);
-	private Jaguar rightFront = new Jaguar(3);
-	private Jaguar rightBack = new Jaguar(4);
-	private Jaguar middleMiddle = new Jaguar(5);
+	private Talon leftFront = new Talon(4); 
+	private Talon leftBack = new Talon(2);
+	private Talon rightFront = new Talon(5);
+	private Talon rightBack = new Talon(3);
+	private Talon middleMiddle = new Talon(1); //related to hdrive 
+	private Talon middleMiddle2 = new Talon(0); //related to hdrive 
 	
     public MotorSubsystem() {
 		System.out.println("MotorSystem constructor called");
+		
 	}
 
 	public void initDefaultCommand() {
@@ -29,24 +32,28 @@ public class MotorSubsystem extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
 	
-	public Jaguar getLeftFront() {
+	public Talon getLeftFront() {
 		return leftFront;
 	}
 	
-	public Jaguar getLeftBack() {
+	public Talon getLeftBack() {
 		return leftFront;
 	}
 	
-	public Jaguar getRightFront() {
+	public Talon getRightFront() {
 		return rightFront;
 	}
 	
-	public Jaguar getRightBack() {
+	public Talon getRightBack() {
 		return rightBack;
 	}
 	
-	public Jaguar getMiddle() {
+	public Talon getMiddleOne() {
 		return middleMiddle;
+	}
+	
+	public Talon getMiddleTwo() {
+		return middleMiddle2;
 	}
 }
 

@@ -33,9 +33,11 @@ public class StrafeCommand extends Command {
      */
     protected void execute() {
     	if(OI.getRightStick().getX() > 1) {
-    		strafeCommandMotorSubsystem.getMiddle().set(1); //Strafe right
+    		strafeCommandMotorSubsystem.getMiddleOne().set(1); //Strafe right
+    		strafeCommandMotorSubsystem.getMiddleTwo().set(1); //Strafe right
     	} else if (OI.getRightStick().getX() < 1) {
-    		strafeCommandMotorSubsystem.getMiddle().set(-1); //Strafe left
+    		strafeCommandMotorSubsystem.getMiddleOne().set(-1); //Strafe left
+    		strafeCommandMotorSubsystem.getMiddleTwo().set(-1); //Strafe left
     	}
     }
 
@@ -47,6 +49,8 @@ public class StrafeCommand extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	System.out.println("Strafing ended");
+    	strafeCommandMotorSubsystem.getMiddleOne().set(0);
+    	strafeCommandMotorSubsystem.getMiddleTwo().set(0);
     }
 
     // Called when another command which requires one or more of the same

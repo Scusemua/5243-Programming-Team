@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.RobotDrive;
 
 import org.usfirst.frc.team5243.robot.commands.*;
 import org.usfirst.frc.team5243.robot.subsystems.*;
-import org.usfirst.frc.team5243.robot.triggers.*;
+//import org.usfirst.frc.team5243.robot.triggers.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -23,9 +23,13 @@ import org.usfirst.frc.team5243.robot.triggers.*;
 public class Robot extends IterativeRobot {
 
 	public static final RobotSubsystem robotSubsystem = new RobotSubsystem();
-	public static OI oi = new OI();
+	public static final CameraSubsystem cameraSubsystem = new CameraSubsystem();
+	public static final OI oi = new OI();
+	
 	private RobotDrive robot = new RobotDrive(1,2,3,4); //motor channels are parameters 
 	private StrafeCommand strafeCommand = new StrafeCommand();
+	
+	private boolean firstTime = true; //Used to test whether it's the first iteration of teleopContinuous(); 
 	
     Command autonomousCommand;
 
@@ -40,12 +44,15 @@ public class Robot extends IterativeRobot {
         //Intialize the actual Robot
         //MotorSubsystem test = new MotorSubsystem(new Jaguar(RobotMap.leftMotor));
         robot.setSafetyEnabled(false);
+        robot.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
+        //robot.setInvertedMotor(RobotDrive.MotorType.)
     }
 	
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
+        robot.drive(1, 0);
     }
 
     /**
@@ -57,15 +64,8 @@ public class Robot extends IterativeRobot {
 
     public void autonomousContinuous() {
     	System.out.println("AutonomousContinuous called");
+    	robot.drive(1, 0);
     	
-    }
-    
-    public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-        // teleop starts running. If you want the autonomous to 
-        // continue until interrupted by another command, remove
-        // this line or comment it out.
-
     }
     
     public void teleopPeriodic() {
@@ -74,14 +74,28 @@ public class Robot extends IterativeRobot {
     }
     
     public void teleopContinuous() {
+    	if(firstTime) {
+    		System.out.println("teleopContinuous called for first time");
+    		firstTime = false;
+    	}
         if (autonomousCommand != null) autonomousCommand.cancel();
-        System.out.println("teleop running");
-        //OI.getLeftStrafeTrigger().whileHeld(strafeCommand);
-        OI.getRightStrafeTrigger().whileHeld(strafeCommand);
-        robot.tankDrive(oi.getLeftStick(), oi.getRightStick());
-        Timer.delay(0.01);
+        while(isEnabled()) {
+        	//System.out.println("teleopContinuous running");
+        	//OI.getLeftStrafeTrigger().whileHeld(strafeCommand);
+        	//OI.getRightStrafeTrigger().whileHeld(strafeCommand);
+        	robot.tankDrive(oi.getLeftStick(), oi.getRightStick());
+        	Timer.delay(0.01);
+        }
     }
 
+    public void teleopInit() {
+		// This makes sure that the autonomous stops running when
+        // teleop starts running. If you want the autonomous to 
+        // continue until interrupted by another command, remove
+        // this line or comment it out.
+    	System.out.println("teleopInit called");
+    	teleopContinuous(); 
+    }
     
     public void testInit() {
     	
@@ -95,7 +109,12 @@ public class Robot extends IterativeRobot {
     }
     
     public void testContinuous() {
-    	
+    	if (autonomousCommand != null) autonomousCommand.cancel();
+        System.out.println("testContinuous running");
+        //OI.getLeftStrafeTrigger().whileHeld(strafeCommand);
+        OI.getRightStrafeTrigger().whileHeld(strafeCommand);
+        robot.tankDrive(oi.getLeftStick(), oi.getRightStick());
+        Timer.delay(0.01);
     }
     
     /**
