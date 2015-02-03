@@ -17,13 +17,17 @@ public class StrafeCommand extends Command {
 	//Constructor 
 	MotorSubsystem strafeCommandMotorSubsystem; 
 	
-	public void StrafeCommand() {
+	public StrafeCommand() {
 		strafeCommandMotorSubsystem = new MotorSubsystem(); //Created so we can get the objects of that class
+		System.out.println("Strafe command constructor");
 	}
 	
 	// Called just before this Command runs the first time
-    protected void initialize() {
-    	
+    public void initialize() {
+    	System.out.println("Strafecommand initialize");
+    }
+    public void start(){
+    	this.execute();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -31,14 +35,20 @@ public class StrafeCommand extends Command {
     /*
      * Checks to see if the user wants to strafe to the left 
      */
-    protected void execute() {
+    public void execute() {
+    	System.out.println("Entering Strafe exectute");
+    	double speedval = .5;
+    	double negativeSpeedval = -1 * speedval;
     	if(OI.getRightStick().getX() > 1) {
-    		strafeCommandMotorSubsystem.getMiddleOne().set(1); //Strafe right
-    		strafeCommandMotorSubsystem.getMiddleTwo().set(1); //Strafe right
+    		//System.out.println("> 1");
+    		strafeCommandMotorSubsystem.getMiddleOne().set(speedval); //Strafe right
+    		strafeCommandMotorSubsystem.getMiddleTwo().set(speedval); //Strafe right
     	} else if (OI.getRightStick().getX() < 1) {
-    		strafeCommandMotorSubsystem.getMiddleOne().set(-1); //Strafe left
-    		strafeCommandMotorSubsystem.getMiddleTwo().set(-1); //Strafe left
+    		//System.out.println("< 1");
+    		strafeCommandMotorSubsystem.getMiddleOne().set(negativeSpeedval); //Strafe left
+    		strafeCommandMotorSubsystem.getMiddleTwo().set(negativeSpeedval); //Strafe left
     	}
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -47,7 +57,7 @@ public class StrafeCommand extends Command {
     }
 
     // Called once after isFinished returns true
-    protected void end() {
+    public void end() {
     	System.out.println("Strafing ended");
     	strafeCommandMotorSubsystem.getMiddleOne().set(0);
     	strafeCommandMotorSubsystem.getMiddleTwo().set(0);

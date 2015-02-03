@@ -19,7 +19,7 @@ public class OI {
     // Button button = new JoystickButton(stick, buttonNumber);
     private static Joystick leftStick = new Joystick(RobotMap.leftJoystick); 
     private static Joystick rightStick = new Joystick(RobotMap.rightJoystick);
-	private static Button strafeTriggerLeft = new JoystickButton(leftStick, 1);
+	private static Button strafeTriggerLeft = new JoystickButton(leftStick, 1); 
 	private static Button strafeTriggerRight = new JoystickButton(rightStick, 1);
 	
     // There are a few additional built in buttons you can use. Additionally,

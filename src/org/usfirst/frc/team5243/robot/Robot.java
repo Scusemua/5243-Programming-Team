@@ -1,3 +1,14 @@
+/*
+ * 
+ * COMMENT THE CODE IF YOU MAKE CHANGES
+ * SO WE DON'T HAVE TO SPEND 20 MINUTES
+ * TRYING TO FIGURE OUT WHAT THE HECK YOU CHANGED
+ * AND WHY EVERYTHING IS BROKEN/NOT WORKING LIKE IT WAS BEFORE
+ * 
+ * THANK YOU,
+ * BEN
+ * 
+ */
 
 package org.usfirst.frc.team5243.robot;
 
@@ -26,11 +37,11 @@ public class Robot extends IterativeRobot {
 	public static final CameraSubsystem cameraSubsystem = new CameraSubsystem();
 	public static final OI oi = new OI();
 	
-	private RobotDrive robot = new RobotDrive(1,2,3,4); //motor channels are parameters 
-	private StrafeCommand strafeCommand = new StrafeCommand();
+	private RobotDrive robot = new RobotDrive(RobotMap.frontLeftMotor,RobotMap.backLeftMotor,RobotMap.frontRightMotor,RobotMap.backRightMotor); //motor channels are parameters 
+	private StrafeCommand strafeCommand;
 	
 	private boolean firstTime = true; //Used to test whether it's the first iteration of teleopContinuous(); 
-	
+	private boolean first1time = true;
     Command autonomousCommand;
 
     /**
@@ -44,8 +55,11 @@ public class Robot extends IterativeRobot {
         //Intialize the actual Robot
         //MotorSubsystem test = new MotorSubsystem(new Jaguar(RobotMap.leftMotor));
         robot.setSafetyEnabled(false);
-        robot.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
+        //robot.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
         //robot.setInvertedMotor(RobotDrive.MotorType.)
+        System.out.println("Strafe command constructor before");
+        strafeCommand = new StrafeCommand();
+        System.out.println("Stafe command constructor after");
     }
 	
 
@@ -80,11 +94,19 @@ public class Robot extends IterativeRobot {
     	}
         if (autonomousCommand != null) autonomousCommand.cancel();
         while(isEnabled()) {
-        	//System.out.println("teleopContinuous running");
-        	//OI.getLeftStrafeTrigger().whileHeld(strafeCommand);
-        	//OI.getRightStrafeTrigger().whileHeld(strafeCommand);
+        	/*
+        	 * Temporary workaround for the strafeing. 
+        	 * I call the strafeCommand method upon pressing the right trigger
+        	 * and turn it off if I stop pressing the trigger. 
+        	 */
+            if(OI.getRightStrafeTrigger().get()) {
+            	strafeCommand.start();
+            }
+            if(!OI.getRightStrafeTrigger().get()) {
+            	strafeCommand.end();
+            }
         	robot.tankDrive(oi.getLeftStick(), oi.getRightStick());
-        	Timer.delay(0.01);
+        	Timer.delay(0.1);
         }
     }
 
@@ -112,7 +134,6 @@ public class Robot extends IterativeRobot {
     	if (autonomousCommand != null) autonomousCommand.cancel();
         System.out.println("testContinuous running");
         //OI.getLeftStrafeTrigger().whileHeld(strafeCommand);
-        OI.getRightStrafeTrigger().whileHeld(strafeCommand);
         robot.tankDrive(oi.getLeftStick(), oi.getRightStick());
         Timer.delay(0.01);
     }
