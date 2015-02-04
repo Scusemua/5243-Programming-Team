@@ -21,16 +21,15 @@ public class OI {
     // number it is.
     // Joystick stick = new Joystick(port);
     // Button button = new JoystickButton(stick, buttonNumber);
-	private static final CameraSubsystem cameraSubsystem = new CameraSubsystem();
-	private static final MotorSubsystem motorSubsystem = new MotorSubsystem();
-	
-    private static Joystick leftStick = new Joystick(RobotMap.leftJoystick); 
-    private static Joystick rightStick = new Joystick(RobotMap.rightJoystick);
-	private static Button strafeTriggerLeft = new JoystickButton(leftStick, 1); 
-	private static Button strafeTriggerRight = new JoystickButton(rightStick, 1);
+    private Joystick leftStick = new Joystick(RobotMap.leftJoystick); 
+    private Joystick rightStick = new Joystick(RobotMap.rightJoystick);
+	private Button strafeTriggerLeft = new JoystickButton(leftStick, 1); 
+	private Button strafeTriggerRight = new JoystickButton(rightStick, 1);
 	
 	private StrafeCommand strafeCommand = new StrafeCommand();
 	
+	public static CameraSubsystem cameraSubsystem = new CameraSubsystem();
+	public static MotorSubsystem motorSubsystem = new MotorSubsystem();
 	/*
 	 * This is the limit switch. The constructor parameter is the channel its plugged into. 
 	 */
@@ -59,28 +58,28 @@ public class OI {
 	/*
 	 * Get the left joystick
 	 */
-    public static Joystick getLeftStick() {
+    public Joystick getLeftStick() {
     	return leftStick;
     }
     
     /*
      * Get the right joystick 
      */
-    public static Joystick getRightStick() {
+    public Joystick getRightStick() {
     	return rightStick;
     }
     
     /*
      * Get the trigger on the LEFT joystick that allows for strafing 
      */
-    public static Button getLeftStrafeTrigger() {
+    public Button getLeftStrafeTrigger() {
     	return strafeTriggerLeft;
     }
     
     /*
      * Get the trigger on the RIGHT joystick that allows for strafing 
      */
-    public static Button getRightStrafeTrigger() {
+    public Button getRightStrafeTrigger() {
     	return strafeTriggerRight;
     }
 	
@@ -88,20 +87,12 @@ public class OI {
     	return strafeCommand;
     }
     
-    public MotorSubsystem getMotorSubsystem() {
-    	return motorSubsystem;
-    }
-    
-    public CameraSubsystem getCameraSubstsem() {
-    	return cameraSubsystem;
-    }
-    
     /* 
      * This method checks if either the left trigger or right trigger is pressed. (The left trigger being the
      * trigger button on the left joystick, the right trigger being the trigger button on the right joystick.)
      * It returns true if either one is pressed or false if neither are pressed. 
      */
-    public static boolean isPressed() {
+    public boolean isPressed() {
     	if(strafeTriggerLeft.get() || strafeTriggerRight.get()) {
     		return true;
     	} else {

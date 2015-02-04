@@ -15,10 +15,10 @@ import org.usfirst.frc.team5243.robot.subsystems.*;
 
 public class StrafeCommand extends Command {
 	//Constructor 
-	MotorSubsystem strafeCommandMotorSubsystem; 
+	
 	
 	public StrafeCommand() {
-		strafeCommandMotorSubsystem = new MotorSubsystem(); //Created so we can get the objects of that class
+		
 		System.out.println("Strafe command constructor");
 	}
 	
@@ -37,30 +37,33 @@ public class StrafeCommand extends Command {
      */
     public void execute() {
     	System.out.println("Entering Strafe exectute");
-    	double speedval = .5;
+    	double speedval = .25;
     	double negativeSpeedval = -1 * speedval;
-    	if(OI.getRightStick().getX() > 1) {
+    	if(Robot.oi.getRightStick().getX() > 1) {
     		//System.out.println("> 1");
-    		strafeCommandMotorSubsystem.getMiddleOne().set(speedval); //Strafe right
-    		strafeCommandMotorSubsystem.getMiddleTwo().set(speedval); //Strafe right
-    	} else if (OI.getRightStick().getX() < 1) {
+    		OI.motorSubsystem.getMiddleOne().set(speedval); //Strafe right
+    		OI.motorSubsystem.getMiddleTwo().set(speedval); //Strafe right
+    	} else if (Robot.oi.getRightStick().getX() < 1) {
     		//System.out.println("< 1");
-    		strafeCommandMotorSubsystem.getMiddleOne().set(negativeSpeedval); //Strafe left
-    		strafeCommandMotorSubsystem.getMiddleTwo().set(negativeSpeedval); //Strafe left
+    		OI.motorSubsystem.getMiddleOne().set(negativeSpeedval); //Strafe left
+    		OI.motorSubsystem.getMiddleTwo().set(negativeSpeedval); //Strafe left
     	}
     	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+    	if(!Robot.oi.getRightStrafeTrigger().get()) {
+    		return true;
+    	}
         return false;
     }
 
     // Called once after isFinished returns true
     public void end() {
     	System.out.println("Strafing ended");
-    	strafeCommandMotorSubsystem.getMiddleOne().set(0);
-    	strafeCommandMotorSubsystem.getMiddleTwo().set(0);
+    	OI.motorSubsystem.getMiddleOne().set(0);
+    	OI.motorSubsystem.getMiddleTwo().set(0);
     }
 
     // Called when another command which requires one or more of the same

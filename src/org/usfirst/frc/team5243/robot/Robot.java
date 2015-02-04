@@ -36,8 +36,7 @@ import org.usfirst.frc.team5243.robot.subsystems.*;
  * directory.
  */
 public class Robot extends IterativeRobot {
-
-	public static final OI oi = new OI();
+	public static OI oi = new OI();
 	private RobotDrive robot = new RobotDrive(RobotMap.frontLeftMotor,RobotMap.backLeftMotor,RobotMap.frontRightMotor,RobotMap.backRightMotor); //motor channels are parameters 
 	
 	private boolean firstTime = true; //Used to test whether it's the first iteration of teleopContinuous(); 
@@ -79,10 +78,7 @@ public class Robot extends IterativeRobot {
     
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        if(OI.getRightStrafeTrigger().get()) {
-        	oi.getStrafeCommand().start();
-        }
-        if(!OI.getRightStrafeTrigger().get()) {
+        if(oi.getRightStrafeTrigger().get()) {
         	oi.getStrafeCommand().start();
         }
     	robot.tankDrive(oi.getLeftStick(), oi.getRightStick());
@@ -110,7 +106,11 @@ public class Robot extends IterativeRobot {
         	Timer.delay(0.1);
         }
     } */
-
+    
+    public void teleopContinuous() {
+    	
+    }
+    
     public void teleopInit() {
 		// This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to 
@@ -129,14 +129,6 @@ public class Robot extends IterativeRobot {
     public void testPeriodic() {
         LiveWindow.run();
         
-    }
-    
-    public void testContinuous() {
-    	if (autonomousCommand != null) autonomousCommand.cancel();
-        System.out.println("testContinuous running");
-        //OI.getLeftStrafeTrigger().whileHeld(strafeCommand);
-        robot.tankDrive(oi.getLeftStick(), oi.getRightStick());
-        Timer.delay(0.01);
     }
     
     /**
