@@ -28,6 +28,18 @@ import org.usfirst.frc.team5243.robot.commands.*;
 import org.usfirst.frc.team5243.robot.subsystems.*;
 //import org.usfirst.frc.team5243.robot.triggers.*;
 
+/*
+ *CHANGES 2/4/15 
+ *Added 3 methods for strafing types:
+ *Buttons way (variable speed)recently changed previously not working however recently untested(new code to test)
+ *Triggers(constant speed)Working 
+ *Triggers(variable speed) not working I think the problem lies in getting the magnitude of X for speed. I assumed this based off of the other Trigger working
+ *
+ *starting to experiment with whileheld()  and getting strafecommand to work how it is supposed to
+ *Watch out joysticks are switched (the supposdly left one is right)
+ *
+ *
+ */
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
