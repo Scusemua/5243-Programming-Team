@@ -25,6 +25,36 @@ public class OI {
     private Joystick rightStick = new Joystick(RobotMap.rightJoystick);
 	private Button strafeTriggerLeft = new JoystickButton(leftStick, 1); 
 	private Button strafeTriggerRight = new JoystickButton(rightStick, 1);
+    
+    //Entering test things Austin was doing
+	private Button testButton = new JoystickButton(rightStick,7);
+	
+	private Button speedUp= new JoystickButton(leftStick,3);
+	private Button slowDown= new JoystickButton(leftStick,2);
+	private Button leftStrafe = new JoystickButton(rightStick, 4);
+	private Button rightStrafe = new JoystickButton(rightStick, 5);
+	private Button resetButton = new JoystickButton(rightStick,2);
+	
+	public Button getSpeedButton(){
+		return speedUp;
+	}
+	public Button getSlowButton(){
+		return slowDown;
+	}
+	public Button getLeftStrafe(){
+		return leftStrafe;
+	}
+	public Button getRightStrafe(){
+		return rightStrafe;
+	}
+    public Button getResetButton(){
+    	return resetButton;
+    }
+    public Button getTestButton(){
+    	return testButton;
+    }
+    
+    //Exiting test things Austin was doing
 	
 	private StrafeCommand strafeCommand = new StrafeCommand();
 	

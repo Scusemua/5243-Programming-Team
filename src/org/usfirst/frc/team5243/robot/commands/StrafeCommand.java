@@ -26,8 +26,9 @@ public class StrafeCommand extends Command {
     public void initialize() {
     	System.out.println("Strafecommand initialize");
     }
-    public void start(){
-    	this.execute();
+    public void start(double d){
+    	//Added speed parameter so that the side the trigger was pushed(left or right) will change the direction
+    	this.execute(d);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -35,18 +36,18 @@ public class StrafeCommand extends Command {
     /*
      * Checks to see if the user wants to strafe to the left 
      */
-    public void execute() {
+    public void execute(double speedval) {
     	System.out.println("Entering Strafe exectute");
-    	double speedval = .25;
-    	double negativeSpeedval = -1 * speedval;
+    	//double speedval = .25;
+    	//double negativeSpeedval = -1 * speedval;
     	if(Robot.oi.getRightStick().getX() > 1) {
     		//System.out.println("> 1");
     		OI.motorSubsystem.getMiddleOne().set(speedval); //Strafe right
     		OI.motorSubsystem.getMiddleTwo().set(speedval); //Strafe right
     	} else if (Robot.oi.getRightStick().getX() < 1) {
     		//System.out.println("< 1");
-    		OI.motorSubsystem.getMiddleOne().set(negativeSpeedval); //Strafe left
-    		OI.motorSubsystem.getMiddleTwo().set(negativeSpeedval); //Strafe left
+    		OI.motorSubsystem.getMiddleOne().set(speedval); //Strafe left
+    		OI.motorSubsystem.getMiddleTwo().set(speedval); //Strafe left
     	}
     	
     }
@@ -74,5 +75,14 @@ public class StrafeCommand extends Command {
     protected boolean continueStrafe() {
     	return false;
     }
+
+	protected void execute() {
+		// needed so compiler doesn't complain yet does not do anything
+		System.out.println("AMAZING STRAFECOMMMAND EXECUTE HAS FINNALLY RUN!!");
+		
+	}
+	public void start(){
+		System.out.println("in StrafeCommand start ");
+	}
     
 }
