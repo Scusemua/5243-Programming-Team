@@ -8,6 +8,10 @@
  * THANK YOU,
  * BEN
  * 
+ * P.S.
+ * 
+ * Austin just asked what a "crio" was. As in "C-Rio" but he pronounced cree-oh. 
+ * 
  */
 
 package org.usfirst.frc.team5243.robot;
@@ -33,15 +37,10 @@ import org.usfirst.frc.team5243.robot.subsystems.*;
  */
 public class Robot extends IterativeRobot {
 
-	public static final RobotSubsystem robotSubsystem = new RobotSubsystem();
-	public static final CameraSubsystem cameraSubsystem = new CameraSubsystem();
 	public static final OI oi = new OI();
-	
 	private RobotDrive robot = new RobotDrive(RobotMap.frontLeftMotor,RobotMap.backLeftMotor,RobotMap.frontRightMotor,RobotMap.backRightMotor); //motor channels are parameters 
-	private StrafeCommand strafeCommand;
 	
 	private boolean firstTime = true; //Used to test whether it's the first iteration of teleopContinuous(); 
-	private boolean first1time = true;
     Command autonomousCommand;
 
     /**
@@ -53,13 +52,9 @@ public class Robot extends IterativeRobot {
     	System.out.println("robotInit() called");
         autonomousCommand = new RobotCommand();
         //Intialize the actual Robot
-        //MotorSubsystem test = new MotorSubsystem(new Jaguar(RobotMap.leftMotor));
         robot.setSafetyEnabled(false);
         //robot.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
         //robot.setInvertedMotor(RobotDrive.MotorType.)
-        System.out.println("Strafe command constructor before");
-        strafeCommand = new StrafeCommand();
-        System.out.println("Stafe command constructor after");
     }
 	
 
@@ -84,10 +79,16 @@ public class Robot extends IterativeRobot {
     
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        
+        if(OI.getRightStrafeTrigger().get()) {
+        	oi.getStrafeCommand().start();
+        }
+        if(!OI.getRightStrafeTrigger().get()) {
+        	oi.getStrafeCommand().start();
+        }
+    	robot.tankDrive(oi.getLeftStick(), oi.getRightStick());
     }
     
-    public void teleopContinuous() {
+    /* public void teleopContinuous() {
     	if(firstTime) {
     		System.out.println("teleopContinuous called for first time");
     		firstTime = false;
@@ -98,7 +99,7 @@ public class Robot extends IterativeRobot {
         	 * Temporary workaround for the strafeing. 
         	 * I call the strafeCommand method upon pressing the right trigger
         	 * and turn it off if I stop pressing the trigger. 
-        	 */
+        	 *
             if(OI.getRightStrafeTrigger().get()) {
             	strafeCommand.start();
             }
@@ -108,7 +109,7 @@ public class Robot extends IterativeRobot {
         	robot.tankDrive(oi.getLeftStick(), oi.getRightStick());
         	Timer.delay(0.1);
         }
-    }
+    } */
 
     public void teleopInit() {
 		// This makes sure that the autonomous stops running when
@@ -116,7 +117,7 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
     	System.out.println("teleopInit called");
-    	teleopContinuous(); 
+    	teleopPeriodic(); 
     }
     
     public void testInit() {

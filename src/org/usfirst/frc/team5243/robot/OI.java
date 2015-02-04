@@ -3,8 +3,12 @@ package org.usfirst.frc.team5243.robot;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.DigitalInput;
 
-import org.usfirst.frc.team5243.robot.commands.RobotCommand;
+import org.usfirst.frc.team5243.robot.commands.StrafeCommand;
+
+import org.usfirst.frc.team5243.robot.subsystems.CameraSubsystem;
+import org.usfirst.frc.team5243.robot.subsystems.MotorSubsystem;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -17,10 +21,20 @@ public class OI {
     // number it is.
     // Joystick stick = new Joystick(port);
     // Button button = new JoystickButton(stick, buttonNumber);
+	private static final CameraSubsystem cameraSubsystem = new CameraSubsystem();
+	private static final MotorSubsystem motorSubsystem = new MotorSubsystem();
+	
     private static Joystick leftStick = new Joystick(RobotMap.leftJoystick); 
     private static Joystick rightStick = new Joystick(RobotMap.rightJoystick);
 	private static Button strafeTriggerLeft = new JoystickButton(leftStick, 1); 
 	private static Button strafeTriggerRight = new JoystickButton(rightStick, 1);
+	
+	private StrafeCommand strafeCommand = new StrafeCommand();
+	
+	/*
+	 * This is the limit switch. The constructor parameter is the channel its plugged into. 
+	 */
+	private DigitalInput limitSwitch = new DigitalInput(1);
 	
     // There are a few additional built in buttons you can use. Additionally,
     // by subclassing Button you can create custom triggers and bind those to
@@ -70,6 +84,18 @@ public class OI {
     	return strafeTriggerRight;
     }
 	
+    public StrafeCommand getStrafeCommand() {
+    	return strafeCommand;
+    }
+    
+    public MotorSubsystem getMotorSubsystem() {
+    	return motorSubsystem;
+    }
+    
+    public CameraSubsystem getCameraSubstsem() {
+    	return cameraSubsystem;
+    }
+    
     /* 
      * This method checks if either the left trigger or right trigger is pressed. (The left trigger being the
      * trigger button on the left joystick, the right trigger being the trigger button on the right joystick.)

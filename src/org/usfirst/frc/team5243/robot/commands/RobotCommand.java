@@ -3,6 +3,8 @@ package org.usfirst.frc.team5243.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc.team5243.robot.Robot;
+import org.usfirst.frc.team5243.robot.subsystems.CameraSubsystem;
+import org.usfirst.frc.team5243.robot.subsystems.RobotSubsystem;
 
 /**
  *
@@ -11,7 +13,7 @@ public class RobotCommand extends Command {
 
     public RobotCommand() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.robotSubsystem);
+        //requires(OI.robotSubsystem);
         
     }
 
