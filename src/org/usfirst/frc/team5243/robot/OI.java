@@ -60,36 +60,31 @@ public class OI {
     public Button getResetButton(){
     	return resetButton;
     }
-
-    
+ 
 	/**
 	 * Get the left joystick
 	 */
     public Joystick getLeftStick() {
     	return leftStick;
     }
-    
     /**
      * Get the right joystick 
      */
     public Joystick getRightStick() {
     	return rightStick;
     }
-    
     /**
      * Get the trigger on the LEFT joystick that allows for strafing 
      */
     public Button getLeftStrafeTrigger() {
     	return strafeTriggerLeft;
     }
-    
     /**
      * Get the trigger on the RIGHT joystick that allows for strafing 
      */
     public Button getRightStrafeTrigger() {
     	return strafeTriggerRight;
     }
-	
     public StrafeCommand getStrafeCommand() {
     	return strafeCommand;
     }
