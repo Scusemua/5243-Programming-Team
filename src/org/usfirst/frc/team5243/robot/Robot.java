@@ -38,8 +38,8 @@ import org.usfirst.frc.team5243.robot.subsystems.*;
  *starting to experiment with whileheld()  and getting strafecommand to work how it is supposed to
  *Watch out joysticks are switched (the supposdly left one is right)
  *
- *
  */
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
