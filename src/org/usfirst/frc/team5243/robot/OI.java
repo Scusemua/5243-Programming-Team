@@ -30,6 +30,7 @@ public class OI {
 		strafeTriggerRight = new JoystickButton(rightStick, 1);
 		
 	public IO(){
+		strafeSpeed=0;
 		speedUp.whenPressed(new StrafeSpeedCommand(strafeSpeed+.1);
 		slowDown.whenPressed(new StrafeSpeedCommand(strafeSpeed-.1);
 		leftStrafe.whileHeld(new StrafeCommand());
