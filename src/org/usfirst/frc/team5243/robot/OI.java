@@ -11,28 +11,23 @@ import org.usfirst.frc.team5243.robot.subsystems.CameraSubsystem;
 import org.usfirst.frc.team5243.robot.subsystems.MotorSubsystem;
 
 public class OI {
-    private Joystick leftStick = new Joystick(RobotMap.leftJoystick); 
-    private Joystick rightStick = new Joystick(RobotMap.rightJoystick);
-	private Button strafeTriggerLeft = new JoystickButton(leftStick, 1); 
-	private Button strafeTriggerRight = new JoystickButton(rightStick, 1);
+    private const Joystick leftStick = new Joystick(RobotMap.leftJoystick), 
+   	rightStick = new Joystick(RobotMap.rightJoystick);
     	
-	private StrafeCommand strafeCommand = new StrafeCommand();
-	
-	public static CameraSubsystem cameraSubsystem = new CameraSubsystem();
-	public static MotorSubsystem motorSubsystem = new MotorSubsystem();
-	
+	private const StrafeCommand strafeCommand = new StrafeCommand();
+	public const static CameraSubsystem cameraSubsystem = new CameraSubsystem();
+	public const static MotorSubsystem motorSubsystem = new MotorSubsystem();
 	//This is the limit switch. The constructor parameter is the channel its plugged into. 
-	private DigitalInput limitSwitch = new DigitalInput(1);
+	private const DigitalInput limitSwitch = new DigitalInput(1);
 	
-    
-    //buttons for various strafing things
-	private Button testButton = new JoystickButton(rightStick,7);//test button isnt tested yet should set robot strafe speed to 0
-	
-	private Button speedUp= new JoystickButton(leftStick,3);
-	private Button slowDown= new JoystickButton(leftStick,2);
-	private Button leftStrafe = new JoystickButton(rightStick, 4);
-	private Button rightStrafe = new JoystickButton(rightStick, 5);
-	private Button resetButton = new JoystickButton(rightStick,2);
+	private Button speedUp= new JoystickButton(leftStick,3),
+		slowDown= new JoystickButton(leftStick,2),
+		leftStrafe = new JoystickButton(rightStick, 4),
+		rightStrafe = new JoystickButton(rightStick, 5),
+		resetButton = new JoystickButton(rightStick,2),
+		testButton = new JoystickButton(rightStick,7);//test button isnt tested yet should set robot strafe speed to 0
+		strafeTriggerLeft = new JoystickButton(leftStick, 1); 
+		strafeTriggerRight = new JoystickButton(rightStick, 1);
 	
 	public Button getSpeedButton(){
 		return speedUp;
@@ -53,7 +48,6 @@ public class OI {
     	return testButton;
     }
     
-    //Exiting strafing buttons
 	/**
 	 * Get the left joystick
 	 */
