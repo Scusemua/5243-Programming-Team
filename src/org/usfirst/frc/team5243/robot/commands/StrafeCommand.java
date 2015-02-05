@@ -14,15 +14,13 @@ import org.usfirst.frc.team5243.robot.subsystems.*;
  */
 
 public class StrafeCommand extends Command {
-	//Constructor 
-	
 	
 	public StrafeCommand() {
 		
 		System.out.println("Strafe command constructor");
 	}
 	
-	// Called just before this Command runs the first time
+    // Called just before this Command runs the first time
     public void initialize() {
     	System.out.println("Strafecommand initialize");
     }
@@ -31,21 +29,16 @@ public class StrafeCommand extends Command {
     	this.execute(d);
     }
 
-    // Called repeatedly when this Command is scheduled to run
-
-    /*
-     * Checks to see if the user wants to strafe to the left 
+    /**Execute gets a value that will take a value and run the strafe motor at the speed.
+     * ====This is not the regular Command method====
+     * @ param speedval the speed you want each motor to go(positive value 0-1)
      */
     public void execute(double speedval) {
     	System.out.println("Entering Strafe exectute");
-    	//double speedval = .25;
-    	//double negativeSpeedval = -1 * speedval;
     	if(Robot.oi.getRightStick().getX() > 1) {
-    		//System.out.println("> 1");
     		OI.motorSubsystem.getMiddleOne().set(speedval); //Strafe right
     		OI.motorSubsystem.getMiddleTwo().set(speedval); //Strafe right
     	} else if (Robot.oi.getRightStick().getX() < 1) {
-    		//System.out.println("< 1");
     		OI.motorSubsystem.getMiddleOne().set(speedval); //Strafe left
     		OI.motorSubsystem.getMiddleTwo().set(speedval); //Strafe left
     	}
@@ -75,14 +68,14 @@ public class StrafeCommand extends Command {
     protected boolean continueStrafe() {
     	return false;
     }
-
-	protected void execute() {
-		// needed so compiler doesn't complain yet does not do anything
-		System.out.println("AMAZING STRAFECOMMMAND EXECUTE HAS FINNALLY RUN!!");
-		
+    //use scheduler with these not working yet.
+    protected void execute() {
+	// needed so compiler doesn't complain yet does not do anything
+	System.out.println("AMAZING STRAFECOMMMAND EXECUTE HAS FINNALLY RUN!!");
+	
 	}
-	public void start(){
-		System.out.println("in StrafeCommand start ");
-	}
+    public void start(){
+	System.out.println("in StrafeCommand start ");
+    }
     
 }
