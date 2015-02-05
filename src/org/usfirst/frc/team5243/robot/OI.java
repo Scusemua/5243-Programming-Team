@@ -25,10 +25,19 @@ public class OI {
 		leftStrafe = new JoystickButton(rightStick, 4),
 		rightStrafe = new JoystickButton(rightStick, 5),
 		resetButton = new JoystickButton(rightStick,2),
-		testButton = new JoystickButton(rightStick,7);//test button isnt tested yet should set robot strafe speed to 0
 		strafeTriggerLeft = new JoystickButton(leftStick, 1); 
 		strafeTriggerRight = new JoystickButton(rightStick, 1);
-	
+		
+	public IO(){
+		speedUp.whenPressed();
+		slowDown.whenPressed();
+		leftStrafe.whileHeld();
+		rightStrafe.whileHeld();
+		resetButton.whenPressed();
+		strafeTriggerLeft.whileHeld();
+		strafeTriggerRight.whileHeld();
+		
+	}
 	public Button getSpeedButton(){
 		return speedUp;
 	}
@@ -44,9 +53,7 @@ public class OI {
     public Button getResetButton(){
     	return resetButton;
     }
-    public Button getTestButton(){
-    	return testButton;
-    }
+
     
 	/**
 	 * Get the left joystick
