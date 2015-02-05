@@ -13,6 +13,7 @@ import org.usfirst.frc.team5243.robot.subsystems.MotorSubsystem;
 public class OI {
     private const Joystick leftStick = new Joystick(RobotMap.leftJoystick), 
    	rightStick = new Joystick(RobotMap.rightJoystick);
+    	private int strafeSpeed;
     	
 	private const StrafeCommand strafeCommand = new StrafeCommand();
 	public const static CameraSubsystem cameraSubsystem = new CameraSubsystem();
@@ -29,14 +30,19 @@ public class OI {
 		strafeTriggerRight = new JoystickButton(rightStick, 1);
 		
 	public IO(){
-		speedUp.whenPressed();
-		slowDown.whenPressed();
-		leftStrafe.whileHeld();
-		rightStrafe.whileHeld();
-		resetButton.whenPressed();
-		strafeTriggerLeft.whileHeld();
-		strafeTriggerRight.whileHeld();
-		
+		speedUp.whenPressed(new StrafeSpeedCommand(strafeSpeed+.1);
+		slowDown.whenPressed(new StrafeSpeedCommand(strafeSpeed-.1);
+		leftStrafe.whileHeld(new StrafeCommand());
+		rightStrafe.whileHeld(new StrafeCommand());
+		resetButton.whenPressed(new StrafeSpeedCommand(0));
+		strafeTriggerLeft.whileHeld(new StrafeCommand());
+		strafeTriggerRight.whileHeld(new StrafeCommand());
+	}
+	public void setStrafeSpeed(double d){
+		strafeSpeed=d;
+	}
+	public int getStrafeSpeed(){
+		return strafeSpeed;
 	}
 	public Button getSpeedButton(){
 		return speedUp;
