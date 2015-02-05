@@ -14,10 +14,10 @@ import org.usfirst.frc.team5243.robot.subsystems.*;
  */
 
 public class StrafeCommand extends Command {
-	
+	private double speed;
 	public StrafeCommand() {
-		
-		System.out.println("Strafe command constructor");
+		System.out.println("Strafe command constructor: default shouldn't be called");
+		speed=Robot.io.getStrafeSpeed();
 	}
 	
     // Called just before this Command runs the first time
@@ -70,8 +70,9 @@ public class StrafeCommand extends Command {
     }
     //use scheduler with these not working yet.
     protected void execute() {
-	// needed so compiler doesn't complain yet does not do anything
 	System.out.println("AMAZING STRAFECOMMMAND EXECUTE HAS FINNALLY RUN!!");
+	OI.motorSubsystem.getMiddleOne().set(speed);
+    	OI.motorSubsystem.getMiddleTwo().set(speed);
 	
 	}
     public void start(){
