@@ -40,13 +40,7 @@ import org.usfirst.frc.team5243.robot.subsystems.*;
  *
  *
  */
-/**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the IterativeRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the manifest file in the resource
- * directory.
- */
+
 public class Robot extends IterativeRobot {
 	public static OI oi = new OI();
 	private RobotDrive robot = new RobotDrive(RobotMap.frontLeftMotor,RobotMap.backLeftMotor,RobotMap.frontRightMotor,RobotMap.backRightMotor); //motor channels are parameters 
@@ -54,10 +48,8 @@ public class Robot extends IterativeRobot {
 	private boolean firstTime = true; //Used to test whether it's the first iteration of teleopContinuous(); 
 	private boolean currentlyPushedR = false;
 	private boolean currentlyPushedL =false;
-    //Austinstuff
 	private double buttonSpeed;
 	
-	//End AustinStuff
 
     /**
      * This function is run when the robot is first started up and should be
@@ -66,11 +58,9 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
         // instantiate the command used for the autonomous period
     	System.out.println("robotInit() called");
-        //autonomousCommand = new RobotCommand(); ben fix this 
         //Intialize the actual Robot
         robot.setSafetyEnabled(false);
-        //robot.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
-        //robot.setInvertedMotor(RobotDrive.MotorType.)
+
         buttonSpeed = 0;
     }
 	
@@ -100,36 +90,8 @@ public class Robot extends IterativeRobot {
         //oi.getTestButton().whenPressed(strafeCommand);
     	robot.tankDrive(oi.getLeftStick(), oi.getRightStick());
     }
-    
-    /* public void teleopContinuous() {
-    	if(firstTime) {
-    		System.out.println("teleopContinuous called for first time");
-    		firstTime = false;
-    	}
-        if (autonomousCommand != null) autonomousCommand.cancel();
-        while(isEnabled()) {
-        	/*
-        	 * Temporary workaround for the strafeing. 
-        	 * I call the strafeCommand method upon pressing the right trigger
-        	 * and turn it off if I stop pressing the trigger. 
-        	 *
-            if(OI.getRightStrafeTrigger().get()) {
-            	strafeCommand.start();
-            }
-            if(!OI.getRightStrafeTrigger().get()) {
-            	strafeCommand.end();
-            }
-        	robot.tankDrive(oi.getLeftStick(), oi.getRightStick());
-        	Timer.delay(0.1);
-        }
-    } */
-    
-    
+   
     public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-        // teleop starts running. If you want the autonomous to 
-        // continue until interrupted by another command, remove
-        // this line or comment it out.
     	System.out.println("teleopInit called");
     	teleopPeriodic(); 
     }
