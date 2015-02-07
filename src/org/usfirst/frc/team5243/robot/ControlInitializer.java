@@ -10,7 +10,7 @@ import org.usfirst.frc.team5243.robot.commands.StrafeSpeedCommand;
 import org.usfirst.frc.team5243.robot.subsystems.CameraSubsystem;
 import org.usfirst.frc.team5243.robot.subsystems.MotorSubsystem;
 
-public class OI {
+public class ControlInitializer {
     private final Joystick leftStick = new Joystick(RobotMap.leftJoystick), 
    	rightStick = new Joystick(RobotMap.rightJoystick);
     private double strafeSpeed;
@@ -29,7 +29,7 @@ public class OI {
 		strafeTriggerLeft = new JoystickButton(leftStick, 1), 
 		strafeTriggerRight = new JoystickButton(rightStick, 1);
 		
-	public OI(){
+	public ControlInitializer(){
 		strafeSpeed=0;
 		speedUp.whenPressed(new StrafeSpeedCommand(strafeSpeed+.1));
 		slowDown.whenPressed(new StrafeSpeedCommand(strafeSpeed-.1));

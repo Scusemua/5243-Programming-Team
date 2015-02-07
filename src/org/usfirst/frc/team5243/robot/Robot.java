@@ -49,7 +49,7 @@ import org.usfirst.frc.team5243.robot.subsystems.*;
  */
 //>>>>>>> branch 'master' of https://github.com/Scusemua/5243-Programming-Team.git
 public class Robot extends IterativeRobot {
-	public static OI oi = new OI();
+	public static ControlInitializer oi = new ControlInitializer();
 	private RobotDrive robot = new RobotDrive(RobotMap.frontLeftMotor,RobotMap.backLeftMotor,RobotMap.frontRightMotor,RobotMap.backRightMotor); //motor channels are parameters 
 	
 	
