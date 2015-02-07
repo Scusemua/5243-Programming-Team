@@ -11,13 +11,14 @@ import org.usfirst.frc.team5243.robot.subsystems.CameraSubsystem;
 import org.usfirst.frc.team5243.robot.subsystems.MotorSubsystem;
 
 public class ControlInitializer {
+    private double strafeSpeed;
+    
     private final Joystick leftStick = new Joystick(RobotMap.leftJoystick), 
    	rightStick = new Joystick(RobotMap.rightJoystick);
-    private double strafeSpeed;
-    	
-	private final StrafeCommand strafeCommand = new StrafeCommand();
+
 	public final static CameraSubsystem cameraSubsystem = new CameraSubsystem();
 	public final static MotorSubsystem motorSubsystem = new MotorSubsystem();
+	
 	//This is the limit switch. The constructor parameter is the channel its plugged into. 
 	private final DigitalInput limitSwitch = new DigitalInput(1);
 	
@@ -33,11 +34,13 @@ public class ControlInitializer {
 		strafeSpeed=0;
 		speedUp.whenPressed(new StrafeSpeedCommand(strafeSpeed+.1));
 		slowDown.whenPressed(new StrafeSpeedCommand(strafeSpeed-.1));
-		leftStrafe.whileHeld(new StrafeCommand());
-		rightStrafe.whileHeld(new StrafeCommand());
+		//left is false right is true
+		leftStrafe.whileHeld(new StrafeCommand(false));
+		rightStrafe.whileHeld(new StrafeCommand(true));
 		resetButton.whenPressed(new StrafeSpeedCommand(0));
-		strafeTriggerLeft.whileHeld(new StrafeCommand());
-		strafeTriggerRight.whileHeld(new StrafeCommand());
+		//I have a problem with the ones below
+		strafeTriggerLeft.whileHeld(new StrafeCommand(false));
+		strafeTriggerRight.whileHeld(new StrafeCommand(true));
 	}
 	/**
 	 * sets the button speed making sure it does not exceed 1 or go below 0(negative speed is handled when moving left or right)
@@ -105,17 +108,5 @@ public class ControlInitializer {
     	return strafeCommand;
     }
     
-    /**
-     * This method checks if either the left trigger or right trigger is pressed. (The left trigger being the
-     * trigger button on the left joystick, the right trigger being the trigger button on the right joystick.)
-     * It returns true if either one is pressed or false if neither are pressed. 
-     */
-    public boolean isPressed() {
-    	if(strafeTriggerLeft.get() || strafeTriggerRight.get()) {
-    		return true;
-    	} else {
-    		return false;
-    	}
-    }
 }
 

@@ -17,16 +17,9 @@
 package org.usfirst.frc.team5243.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.Jaguar;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.RobotDrive;
-
-import org.usfirst.frc.team5243.robot.commands.*;
-import org.usfirst.frc.team5243.robot.subsystems.*;
-//import org.usfirst.frc.team5243.robot.triggers.*;
 
 /*
  *CHANGES 2/4/15 
@@ -85,6 +78,10 @@ public class Robot extends IterativeRobot {
     	robot.drive(1, 0);
     	
     }
+    public void teleopInit() {
+    	System.out.println("teleopInit called");
+    	teleopPeriodic(); 
+    }
     
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
@@ -92,11 +89,6 @@ public class Robot extends IterativeRobot {
     	robot.tankDrive(oi.getLeftStick(), oi.getRightStick());
     }
    
-    public void teleopInit() {
-    	System.out.println("teleopInit called");
-    	teleopPeriodic(); 
-    }
-    
     public void testInit() {
     	
     }

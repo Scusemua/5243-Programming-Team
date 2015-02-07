@@ -4,8 +4,6 @@ import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc.team5243.robot.Robot;
 
-import org.usfirst.frc.team5243.robot.subsystems.*;
-
 public class StrafeSpeedCommand extends Command{
 
   public StrafeSpeedCommand(double d){

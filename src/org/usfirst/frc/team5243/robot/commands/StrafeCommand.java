@@ -16,9 +16,9 @@ import org.usfirst.frc.team5243.robot.subsystems.*;
 public class StrafeCommand extends Command {
 	private double speed;
 
-	public StrafeCommand() {
-		System.out
-				.println("Strafe command constructor: default shouldn't be called");
+	public StrafeCommand(boolean direction) {
+		requires(Robot.oi.motorSubsystem);
+		System.out.println("Strafe command constructor: default shouldn't be called");
 		speed = Robot.oi.getStrafeSpeed();
 	}
 
@@ -87,7 +87,9 @@ public class StrafeCommand extends Command {
 	public void start() {
 		System.out.println("in StrafeCommand start ");
 	}
-
+	/**
+	 * constant speed push right go right push left go left
+	 */
 	private void triggerStrafe() {
 		ControlInitializer.motorSubsystem.getMiddleOne().set(speed);
 		ControlInitializer.motorSubsystem.getMiddleTwo().set(speed);

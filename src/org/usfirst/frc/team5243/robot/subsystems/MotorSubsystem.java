@@ -13,7 +13,7 @@ public class MotorSubsystem extends Subsystem {
 	private Talon middleMiddle = new Talon(RobotMap.middleMotor1); //related to hdrive 
 	private Talon middleMiddle2 = new Talon(RobotMap.middleMotor2); //related to hdrive 
 	
-    	public MotorSubsystem() {
+    public MotorSubsystem() {
 		System.out.println("MotorSystem constructor called");
 	}
 
