@@ -17,11 +17,10 @@ public class StrafeCommand extends Command {
 	private int direction;
 
 	public StrafeCommand(int d) {
-		requires(ControlInitializer.motorSubsystem);
+		//requires(ControlInitializer.motorSubsystem);
 		direction = d;
-		System.out
-				.println("Strafe command constructor: default shouldn't be called");
-		speed = Robot.oi.getStrafeSpeed();
+		System.out.println("Strafe command constructor: default shouldn't be called");
+		
 	}
 
 	// Called just before this Command runs the first time
@@ -53,7 +52,6 @@ public class StrafeCommand extends Command {
 			ControlInitializer.motorSubsystem.getMiddleTwo().set(speedval); // Strafe
 																			// left
 		}
-
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -81,8 +79,8 @@ public class StrafeCommand extends Command {
 	@Override
 	protected void execute() {
 		System.out.println("AMAZING STRAFECOMMMAND EXECUTE HAS FINNALLY RUN!!");
-		Strafe(direction);
 		ButtonSpeed();
+		Strafe(direction);
 	}
 
 	@Override
