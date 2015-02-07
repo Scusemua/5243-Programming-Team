@@ -35,12 +35,12 @@ public class ControlInitializer {
 		speedUp.whenPressed(new StrafeSpeedCommand(strafeSpeed+.1));
 		slowDown.whenPressed(new StrafeSpeedCommand(strafeSpeed-.1));
 		//left is false right is true
-		leftStrafe.whileHeld(new StrafeCommand(false));
-		rightStrafe.whileHeld(new StrafeCommand(true));
+		leftStrafe.whileHeld(new StrafeCommand(-1));
+		rightStrafe.whileHeld(new StrafeCommand(1));
 		resetButton.whenPressed(new StrafeSpeedCommand(0));
 		//I have a problem with the ones below
-		strafeTriggerLeft.whileHeld(new StrafeCommand(false));
-		strafeTriggerRight.whileHeld(new StrafeCommand(true));
+		strafeTriggerLeft.whileHeld(new StrafeCommand(-1));
+		strafeTriggerRight.whileHeld(new StrafeCommand(1));
 	}
 	/**
 	 * sets the button speed making sure it does not exceed 1 or go below 0(negative speed is handled when moving left or right)
@@ -103,9 +103,6 @@ public class ControlInitializer {
      */
     public Button getRightStrafeTrigger() {
     	return strafeTriggerRight;
-    }
-    public StrafeCommand getStrafeCommand() {
-    	return strafeCommand;
     }
     
 }
