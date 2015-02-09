@@ -2,8 +2,8 @@ package org.usfirst.frc.team5243.robot;
 
 
 import edu.wpi.first.wpilibj.buttons.Button;
-
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Counter;
@@ -12,6 +12,7 @@ import org.usfirst.frc.team5243.robot.commands.StrafeCommand;
 import org.usfirst.frc.team5243.robot.commands.StrafeSpeedCommand;
 import org.usfirst.frc.team5243.robot.commands.LiftCommand;
 import org.usfirst.frc.team5243.robot.subsystems.CameraSubsystem;
+import org.usfirst.frc.team5243.robot.subsystems.LiftSubsystem;
 import org.usfirst.frc.team5243.robot.subsystems.MotorSubsystem;
 
 public class ControlInitializer {
@@ -19,11 +20,12 @@ public class ControlInitializer {
     
     private final Joystick leftStick = new Joystick(RobotMap.leftJoystick), rightStick = new Joystick(RobotMap.rightJoystick);
 
-    private DigitalInput limitSwitch = new DigitalInput(8); //Parameter is the channel
+    private final DigitalInput limitSwitch = new DigitalInput(8); //Parameter is the channel
     private Counter limitCounter = new Counter(limitSwitch);
     
 	public final static CameraSubsystem cameraSubsystem = new CameraSubsystem();
 	public final static MotorSubsystem motorSubsystem = new MotorSubsystem();
+	public final static LiftSubsystem liftSubsystem = new LiftSubsystem();
 	
 	//This is the limit switch. The constructor parameter is the channel its plugged into. 
 	//private final DigitalInput limitSwitch = new DigitalInput(1);
@@ -35,24 +37,23 @@ public class ControlInitializer {
 				slowDown= new JoystickButton(leftStick,2);
 				leftStrafe = new JoystickButton(rightStick, 4);
 				rightStrafe = new JoystickButton(rightStick, 5);
-				resetButton = new JoystickButton(rightStick,2);
+				resetButton = new JoystickButton(leftStick,4);
 				strafeTriggerLeft = new JoystickButton(leftStick, 1); 
 				strafeTriggerRight = new JoystickButton(rightStick, 1);
 				liftUp= new JoystickButton(rightStick, 3);
-				liftDown=new JoystickButton(leftStick,2);
+				liftDown=new JoystickButton(rightStick,2);
 		strafeSpeed=0;
 		speedUp.whenPressed(new StrafeSpeedCommand(strafeSpeed+.1));
 		slowDown.whenPressed(new StrafeSpeedCommand(strafeSpeed-.1));
 		liftUp.whenPressed(new LiftCommand(1));
 		liftDown.whenPressed(new LiftCommand(-1));
 		//left is false right is true
-		StrafeCommand xx = new StrafeCommand(-1);
-		leftStrafe.whileHeld(xx);
-		rightStrafe.whileHeld(new StrafeCommand(1));
+		leftStrafe.whenPressed(new StrafeCommand(-1,2));
+		rightStrafe.whenPressed(new StrafeCommand(1,1));
 		resetButton.whenPressed(new StrafeSpeedCommand(0));
-		//I have a problem with the ones below
-		strafeTriggerLeft.whileHeld(new StrafeCommand(-1));
-		strafeTriggerRight.whileHeld(new StrafeCommand(1));
+		// double check below later
+		strafeTriggerLeft.whenPressed(new StrafeCommand(-1,4));
+		strafeTriggerRight.whenPressed(new StrafeCommand(1,3));
 	}
 	/**
 	 * sets the button speed making sure it does not exceed 1 or go below 0(negative speed is handled when moving left or right)

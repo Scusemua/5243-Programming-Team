@@ -15,10 +15,16 @@ public class StrafeCommand extends Command {
 	private double speed;
 	// true is right:false is left
 	private int direction;
+	private int buttonCalling;
 
-	public StrafeCommand(int d) {
+	public StrafeCommand(int d,int but) {
 		//requires(ControlInitializer.motorSubsystem);
-		direction = d;
+		if(d==1||d==-1){
+			direction = d;
+		}else{
+			System.out.println("dont be a fool (strafeCommand)");
+		}
+		buttonCalling=but;
 		System.out.println("Strafe command constructor: default shouldn't be called");
 		
 	}
@@ -28,37 +34,23 @@ public class StrafeCommand extends Command {
 		System.out.println("Strafecommand initialize");
 	}
 
-	public void start(double d) {
-		// Added speed parameter so that the side the trigger was pushed(left or
-		// right) will change the direction
-		this.execute(d);
-	}
-
-	/**
-	 * Execute gets a value that will take a value and run the strafe motor at
-	 * the speed. ====This is not the regular Command method==== @ param
-	 * speedval the speed you want each motor to go(positive value 0-1)
-	 */
-	public void execute(double speedval) {
-		System.out.println("Entering Strafe exectute");
-		if (Robot.oi.getRightStick().getX() > 1) {
-			ControlInitializer.motorSubsystem.getMiddleOne().set(speedval); // Strafe
-																			// right
-			ControlInitializer.motorSubsystem.getMiddleTwo().set(speedval); // Strafe
-																			// right
-		} else if (Robot.oi.getRightStick().getX() < 1) {
-			ControlInitializer.motorSubsystem.getMiddleOne().set(speedval); // Strafe
-																			// left
-			ControlInitializer.motorSubsystem.getMiddleTwo().set(speedval); // Strafe
-																			// left
-		}
-	}
-
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		if (!Robot.oi.getRightStrafeTrigger().get()) {
+		if (!Robot.oi.getRightStrafeTrigger().get()&&speed==1) {//make with left
+			System.out.println("isFinished");
 			return true;
 		}
+		if(!Robot.oi.getLeftStrafeTrigger().get()&&speed==-1){
+			System.out.println("isfinsihed left");
+			return true;
+			
+		}
+		/*if(!Robot.oi.getRightStrafe().get()&&buttonCalling==3){
+			return true;
+		}
+		if(!Robot.oi.getLeftStrafe().get()&&buttonCalling==4){
+			return true;
+		}*/
 		return false;
 	}
 
@@ -66,34 +58,36 @@ public class StrafeCommand extends Command {
 	public void end() {
 		System.out.println("Strafing ended");
 		ControlInitializer.motorSubsystem.getMiddleOne().set(0);
-		ControlInitializer.motorSubsystem.getMiddleTwo().set(0);
+		ControlInitializer.motorSubsystem.getMiddleZero().set(0);
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
+		System.out.println("interrupted strafe command");
 	}
 
 	// use scheduler with these not working yet.
-	@Override
+	
 	protected void execute() {
-		System.out.println("AMAZING STRAFECOMMMAND EXECUTE HAS FINNALLY RUN!!");
-		ButtonSpeed();
+		//System.out.println("AMAZING STRAFECOMMMAND EXECUTE HAS FINNALLY RUN!!");
+		JoystickSpeed();
 		Strafe(direction);
-	}
+		}
 
-	@Override
+	/*
 	public void start() {
 		System.out.println("in StrafeCommand start ");
-	}
+	}*/
 
 	/**
 	 * constant speed push right go right push left go left
 	 */
 	private void Strafe(int d) {
-		ControlInitializer.motorSubsystem.getMiddleOne().set(d * speed);
-		ControlInitializer.motorSubsystem.getMiddleTwo().set(d * speed);
+		ControlInitializer.motorSubsystem.getMiddleOne().set(d*speed);
+		//ControlInitializer.motorSubsystem.getMiddleZero().set(d*speed);
+		System.out.println("Speed Strafe: " + speed);
 	}
 
 	/*

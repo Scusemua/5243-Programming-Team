@@ -12,10 +12,14 @@ public class StrafeSpeedCommand extends Command{
   }
   
   public void initialize(){}
-  public void start(){
-	  Robot.oi.setStrafeSpeed(speed);
+  public void start(){//if there is  start method execute will never run
+	  System.out.println("in Start strafespeed command:"+ speed);
+	  if(speed==.1||speed==-.1)Robot.oi.setStrafeSpeed(speed+Robot.oi.getStrafeSpeed());
+	  else if(speed==0) Robot.oi.setStrafeSpeed(0);
   }
-  public void execute(){}
+  protected void execute(){
+	  System.out.println("execute run strafe speed command");
+  }
   public boolean isFinished(){return true;}
   public void end(){}
   protected void interrupted(){}

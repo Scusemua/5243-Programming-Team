@@ -42,20 +42,9 @@ import edu.wpi.first.wpilibj.RobotDrive;
  */
 //>>>>>>> branch 'master' of https://github.com/Scusemua/5243-Programming-Team.git
 public class Robot extends IterativeRobot {
-	public static ControlInitializer oi;
+	public static ControlInitializer oi=new ControlInitializer();
 	private RobotDrive robot = new RobotDrive(RobotMap.frontLeftMotor,RobotMap.backLeftMotor,RobotMap.frontRightMotor,RobotMap.backRightMotor); //motor channels are parameters 
-
-	static {
-		try {
-			oi = new ControlInitializer();
-		} catch (RuntimeException ex){
-			ex.printStackTrace(System.err);
-			System.err.println(ex);
-			throw ex;
-			
-		}
-		
-	}
+	
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -112,16 +101,14 @@ public class Robot extends IterativeRobot {
      * This function is called when the disabled button is hit.
      * You can use it to reset subsystems before shutting down.
      */
+    @Override 
     public void disabledInit(){
     	
     }
     
+    @Override 
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-	}
-	
-	public void disabledContinuous(){
-		
 	}
 
 }
