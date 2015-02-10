@@ -15,16 +15,14 @@ public class StrafeCommand extends Command {
 	private double speed;
 	// true is right:false is left
 	private int direction;
-	private int buttonCalling;
 
-	public StrafeCommand(int d,int but) {
+	public StrafeCommand(int d) {
 		//requires(ControlInitializer.motorSubsystem);
 		if(d==1||d==-1){
 			direction = d;
 		}else{
 			System.out.println("dont be a fool (strafeCommand)");
 		}
-		buttonCalling=but;
 		System.out.println("Strafe command constructor: default shouldn't be called");
 		
 	}
@@ -36,21 +34,15 @@ public class StrafeCommand extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		if (!Robot.oi.getRightStrafeTrigger().get()&&speed==1) {//make with left
+		if (!Robot.oi.getRightStrafeTrigger().get()&&direction==1) {//make with left
 			System.out.println("isFinished");
 			return true;
 		}
-		if(!Robot.oi.getLeftStrafeTrigger().get()&&speed==-1){
+		if(!Robot.oi.getLeftStrafeTrigger().get()&&direction==-1){
 			System.out.println("isfinsihed left");
 			return true;
 			
 		}
-		/*if(!Robot.oi.getRightStrafe().get()&&buttonCalling==3){
-			return true;
-		}
-		if(!Robot.oi.getLeftStrafe().get()&&buttonCalling==4){
-			return true;
-		}*/
 		return false;
 	}
 
@@ -85,9 +77,10 @@ public class StrafeCommand extends Command {
 	 * constant speed push right go right push left go left
 	 */
 	private void Strafe(int d) {
-		ControlInitializer.motorSubsystem.getMiddleOne().set(d*speed);
-		//ControlInitializer.motorSubsystem.getMiddleZero().set(d*speed);
+		ControlInitializer.motorSubsystem.getMiddleOne().set(speed);//Talon not working as of 2/9/15 6:01
+		ControlInitializer.motorSubsystem.getMiddleZero().set(speed);
 		System.out.println("Speed Strafe: " + speed);
+		//ControlInitializer.motorSubsystem.getMiddleOne().
 	}
 
 	/*
@@ -102,9 +95,6 @@ public class StrafeCommand extends Command {
 
 	private void JoystickSpeed() {
 		speed = Robot.oi.getRightStick().getX();
-	}
-	private void ButtonSpeed(){
-		speed = Robot.oi.getStrafeSpeed();
 	}
 
 }

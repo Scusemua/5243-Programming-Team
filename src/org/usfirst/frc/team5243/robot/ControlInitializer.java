@@ -4,6 +4,7 @@ package org.usfirst.frc.team5243.robot;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Counter;
@@ -20,8 +21,13 @@ public class ControlInitializer {
     
     private final Joystick leftStick = new Joystick(RobotMap.leftJoystick), rightStick = new Joystick(RobotMap.rightJoystick);
 
-    private final DigitalInput limitSwitch = new DigitalInput(8); //Parameter is the channel
-    private Counter limitCounter = new Counter(limitSwitch);
+    private final DigitalInput limitSwitchBottom = new DigitalInput(0); //Parameter is the channel
+    private final DigitalInput limitSwitchFirst = new DigitalInput(1);
+    private final DigitalInput limitSwitchSecond = new DigitalInput(2);
+    private final DigitalInput limitSwitchThird = new DigitalInput(3);
+    private final DigitalInput limitSwitchTop= new DigitalInput(4);
+    
+    private Encoder enc=new Encoder(0,1,false,Encoder.EncodingType.k2X);
     
 	public final static CameraSubsystem cameraSubsystem = new CameraSubsystem();
 	public final static MotorSubsystem motorSubsystem = new MotorSubsystem();
@@ -30,30 +36,20 @@ public class ControlInitializer {
 	//This is the limit switch. The constructor parameter is the channel its plugged into. 
 	//private final DigitalInput limitSwitch = new DigitalInput(1);
 	//private Encoder encoder = new Encoder(2,7); // constructor parameters will change
-	private Button speedUp,slowDown, leftStrafe, rightStrafe, resetButton, strafeTriggerLeft, strafeTriggerRight, liftUp, liftDown;
+	private Button speedUp,slowDown,strafeTriggerLeft, strafeTriggerRight, liftUp, liftDown;
 	
 	public ControlInitializer() {
-		speedUp= new JoystickButton(leftStick,3);
-				slowDown= new JoystickButton(leftStick,2);
-				leftStrafe = new JoystickButton(rightStick, 4);
-				rightStrafe = new JoystickButton(rightStick, 5);
-				resetButton = new JoystickButton(leftStick,4);
+				//deleted speedUp and slowDown
 				strafeTriggerLeft = new JoystickButton(leftStick, 1); 
 				strafeTriggerRight = new JoystickButton(rightStick, 1);
 				liftUp= new JoystickButton(rightStick, 3);
 				liftDown=new JoystickButton(rightStick,2);
 		strafeSpeed=0;
-		speedUp.whenPressed(new StrafeSpeedCommand(strafeSpeed+.1));
-		slowDown.whenPressed(new StrafeSpeedCommand(strafeSpeed-.1));
 		liftUp.whenPressed(new LiftCommand(1));
 		liftDown.whenPressed(new LiftCommand(-1));
 		//left is false right is true
-		leftStrafe.whenPressed(new StrafeCommand(-1,2));
-		rightStrafe.whenPressed(new StrafeCommand(1,1));
-		resetButton.whenPressed(new StrafeSpeedCommand(0));
-		// double check below later
-		strafeTriggerLeft.whenPressed(new StrafeCommand(-1,4));
-		strafeTriggerRight.whenPressed(new StrafeCommand(1,3));
+		strafeTriggerLeft.whenPressed(new StrafeCommand(-1));
+		strafeTriggerRight.whenPressed(new StrafeCommand(1));
 	}
 	/**
 	 * sets the button speed making sure it does not exceed 1 or go below 0(negative speed is handled when moving left or right)
@@ -83,15 +79,6 @@ public class ControlInitializer {
 	public Button getSlowButton(){
 		return slowDown;
 	}
-	public Button getLeftStrafe(){
-		return leftStrafe;
-	}
-	public Button getRightStrafe(){
-		return rightStrafe;
-	}
-    public Button getResetButton(){
-    	return resetButton;
-    }
  
 	/**
 	 * Get the left joystick
@@ -118,12 +105,28 @@ public class ControlInitializer {
     	return strafeTriggerRight;
     }
     
-    public DigitalInput getLimitSwitch(){
-    	return limitSwitch;
+    public DigitalInput getLimitSwitchBottom(){
+    	return limitSwitchBottom;
     } 
-    
-    public Counter getCounter() {
-    	return limitCounter;
+    public DigitalInput getLimitSwitchFirst(){
+    	return limitSwitchFirst;
     }
+    public DigitalInput getLimitSwitchSecond(){
+    	return limitSwitchSecond;
+    }
+    public DigitalInput getLimitSwitchThird(){
+    	return limitSwitchThird;
+    }
+    public DigitalInput getLimitSwitchTop(){
+    	return limitSwitchTop;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
 }
 
