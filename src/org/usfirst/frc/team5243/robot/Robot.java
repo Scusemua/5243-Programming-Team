@@ -18,6 +18,8 @@
 
 package org.usfirst.frc.team5243.robot;
 
+import org.usfirst.frc.team5243.robot.commands.StrafeCommand;
+
 import com.ni.vision.NIVision;
 import com.ni.vision.NIVision.DrawMode;
 import com.ni.vision.NIVision.ShapeMode;
@@ -25,6 +27,7 @@ import com.ni.vision.NIVision.ShapeMode;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -84,6 +87,27 @@ public class Robot extends IterativeRobot {
        }
        robot.drive(.5, 0);
        oi.liftSubsystem.startLift(1);*/
+    /*	//method 2, documents folder -->AutoStrats "AutonomousMedium"
+     * oi.liftSubsystem.liftToLevel(0);
+    	robot.drive(1, 0);
+    	oi.liftSubsystem.liftToLevel(2);
+    	robot.drive(1, 0);
+    	oi.setStrafeSpeed(.5);
+    	Timer.delay(4);
+    	oi.setStrafeSpeed(0);
+    	robot.drive(1);
+    */	
+    /*	//method 3, "AutonomousCarrying"
+     * robot.drive(1, 0);
+    	oi.liftSubsystem.liftToLevel(1);
+    	robot.drive(1, 0);
+    	oi.liftSubsystem.liftToLevel(0);
+    	robot.drive(-1, 0);
+    	robot.drive(1, 0);
+    	oi.liftSubsystem.liftToLevel(1);
+    	robot.drive(1, 45);
+    */	
+    	
     }
     
     /**
@@ -91,7 +115,6 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
-        //disttoobject = oi.sensorSubsystem.getDistance();
         
     }
     
@@ -101,6 +124,9 @@ public class Robot extends IterativeRobot {
     		robot.drive(1, 0);
     		distToAutoZone --;
     	}*/
+    	
+    	
+    	
     	
     	
     }
@@ -144,5 +170,12 @@ public class Robot extends IterativeRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 	}
-
+    
+    public void startDrive(int dist, int deg){
+    	robot.drive(dist, deg);
+    }
+    
+    public RobotDrive getRobotDrive(){
+    	return robot;
+    }
 }

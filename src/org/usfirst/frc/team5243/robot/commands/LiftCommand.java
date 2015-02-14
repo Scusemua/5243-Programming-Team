@@ -26,7 +26,7 @@ public class LiftCommand extends Command {
 		if(direction > 1) direction = 1;
 		if(direction < -1) direction = -1;
 		
-		finish=ControlInitializer.liftSubsystem.checkLimits(direction);
+		finish=ControlInitializer.liftSubsystem.checkLimits( 0, direction);
 		Robot.oi.setDirection(direction);
 	}
 
