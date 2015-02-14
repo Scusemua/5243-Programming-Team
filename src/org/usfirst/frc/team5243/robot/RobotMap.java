@@ -15,9 +15,10 @@ public class RobotMap {
     public static int middleMotor1 = 1;
     public static int middleMotor0 = 0;
     public static int liftMotor = 6;
-    
     public static int leftJoystick = 1;//far back right port is 1
     public static int rightJoystick= 0;//left side port is 0 
+    public static int ultraOutput = 7;
+    public static int ultraInput = 8;
 
     
     // If you are using multiple modules, make sure to define both the port

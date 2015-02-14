@@ -10,46 +10,46 @@ import edu.wpi.first.wpilibj.DigitalInput;
  *WE DOnt have an ENcoder
  */
 public class LiftCommand extends Command {
+	//False is pushed down on limits
 	private boolean finish;
-	private int direction; // -1 is down, 1 is up
-
-	public LiftCommand(int dir) {
-		requires(ControlInitializer.liftSubsystem);
-		if(dir==-1||dir==1){
-			direction = dir;
-		}
-		else{
-			System.out.println("don't be a fool");
-		}
-		finish=false;
+	private int direction;
+	private int dir;
+	public LiftCommand(int d) {
+		//requires(ControlInitializer.liftSubsystem);
+		finish = false;
+		dir = d;
 	}
 
 	protected void initialize() {
 		System.out.println("output initialize()");
-		if(Robot.oi.getLimitSwitchTop().get()&&direction>0){
-			finish=true;
-		}
-		if(Robot.oi.getLimitSwitchBottom().get()&&direction<0){
-			finish=true;
-		}
+		direction = Robot.oi.getDirection() + dir;
+		if(direction > 1) direction = 1;
+		if(direction < -1) direction = -1;
+		
+		finish=ControlInitializer.liftSubsystem.checkLimits(direction);
+		Robot.oi.setDirection(direction);
 	}
 
 	protected void execute() {
-		ControlInitializer.liftSubsystem.getLiftMotor().set(direction * 0.5);
-		System.out.println("execute method limitSwitch");
+		ControlInitializer.liftSubsystem.startLift(direction);
 	}
-
-	protected boolean isFinished() {
-		if (Robot.oi.getLimitSwitchFirst().get()||Robot.oi.getLimitSwitchSecond().get()||Robot.oi.getLimitSwitchThird().get()) {
-			return true;
-		}
-		return finish;
+	
+	protected boolean isFinished(){
+		
+		return ControlInitializer.liftSubsystem.getSwitches(direction);
 	}
 
 	protected void end() {
-		ControlInitializer.liftSubsystem.getLiftMotor().set(0);
+		ControlInitializer.liftSubsystem.stopLift();
+		
+		if (direction < 0&&ControlInitializer.liftSubsystem.getLevel()!=0) {
+			ControlInitializer.liftSubsystem.decreaseLevel();
+		}
+		else if (direction > 0&&ControlInitializer.liftSubsystem.getLevel()!=4) {
+			ControlInitializer.liftSubsystem.increaseLevel();
+		}
 	}
-
+	
 	protected void interrupted() {
 
 	}
