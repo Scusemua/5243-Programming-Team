@@ -17,10 +17,11 @@ public class CameraSubsystem extends Subsystem {
 		// TODO Auto-generated method stub
 		
 	}
-	//int session;
-    //Image frame;
-   /* public void initializeCam(){
-    	frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
+	private int session;
+	private Image frame;
+    private CameraServer server;
+    public void initializeCam(){
+        frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
 
         // the camera name (ex "cam0") can be found through the roborio web interface
         session = NIVision.IMAQdxOpenCamera("cam1",NIVision.IMAQdxCameraControlMode.CameraControlModeController);
@@ -31,7 +32,7 @@ public class CameraSubsystem extends Subsystem {
     }
     public Image getFrame(){
     	return frame;
-    }*/
+    }
     
     
     

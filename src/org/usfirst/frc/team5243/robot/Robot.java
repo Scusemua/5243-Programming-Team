@@ -55,9 +55,9 @@ import edu.wpi.first.wpilibj.RobotDrive;
 public class Robot extends IterativeRobot {
 	public static ControlInitializer oi=new ControlInitializer();
 	private RobotDrive robot; //motor channels are parameters 
-	//NIVision.Rect rect;
 	private double distToAutoZone;
 	private double liftDistance;
+	NIVision.Rect rect;
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -69,9 +69,8 @@ public class Robot extends IterativeRobot {
     	System.out.println("robotInit() called");
         //Intialize the actual Robot
         robot.setSafetyEnabled(false);
-        /*oi.cameraSubsystem.initializeCam();
-        NIVision.IMAQdxStartAcquisition(oi.cameraSubsystem.getSession());
-        rect = new NIVision.Rect(10, 10, 100, 100);*/
+        oi.cameraSubsystem.initializeCam();
+        
     }
 	
 
@@ -141,20 +140,21 @@ public class Robot extends IterativeRobot {
     }
    
     public void testInit() {
-    	
+    	 NIVision.IMAQdxStartAcquisition(oi.cameraSubsystem.getSession());
+
+         rect = new NIVision.Rect(10, 10, 100, 100);
+
     }
     /**
      * This function is called periodically during test mode
      */
     public void testPeriodic() {
-        LiveWindow.run();
-       /* NIVision.IMAQdxGrab(oi.cameraSubsystem.getSession(), oi.cameraSubsystem.getFrame(), 1);
-        NIVision.imaqDrawShapeOnImage(oi.cameraSubsystem.getFrame(), oi.cameraSubsystem.getFrame(), rect,
-                DrawMode.DRAW_VALUE, ShapeMode.SHAPE_OVAL, 0.0f);
+    	LiveWindow.run();
+    	NIVision.IMAQdxGrab(oi.cameraSubsystem.getSession(), oi.cameraSubsystem.getFrame(), 1);
+        NIVision.imaqDrawShapeOnImage(oi.cameraSubsystem.getFrame(), oi.cameraSubsystem.getFrame(), rect,DrawMode.DRAW_VALUE, ShapeMode.SHAPE_OVAL, 0.0f);
         
-        CameraServer.getInstance().setImage(oi.cameraSubsystem.getFrame());*/
-        System.out.println("Bottome switch" + Robot.oi.getLimitSwitchBottom().get());
-        System.out.println("Top switch" + Robot.oi.getLimitSwitchTop().get());
+        CameraServer.getInstance().setImage(oi.cameraSubsystem.getFrame());
+
     }
     
     /**
@@ -163,7 +163,7 @@ public class Robot extends IterativeRobot {
      */
     @Override 
     public void disabledInit(){
-    //	NIVision.IMAQdxStopAcquisition(oi.cameraSubsystem.getSession());
+    	NIVision.IMAQdxStopAcquisition(oi.cameraSubsystem.getSession());
     }
     
     @Override 
