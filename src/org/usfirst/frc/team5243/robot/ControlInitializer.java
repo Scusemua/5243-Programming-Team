@@ -23,12 +23,12 @@ public class ControlInitializer {
     private final Joystick leftStick = new Joystick(RobotMap.leftJoystick), rightStick = new Joystick(RobotMap.rightJoystick);
 
     private final DigitalInput limitSwitchBottom = new DigitalInput(0); //Parameter is the channel
-    private final DigitalInput limitSwitchFirst = new DigitalInput(4);
+    private final DigitalInput limitSwitchFirst = new DigitalInput(1);
     private final DigitalInput limitSwitchSecond = new DigitalInput(2);
-    private final DigitalInput limitSwitchThird = new DigitalInput(3);
-    private final DigitalInput limitSwitchTop= new DigitalInput(1);
+    private final DigitalInput limitSwitchTop= new DigitalInput(3);
     
     private int direction = 0;
+    private double speed = 0;
     
     public final static SensorSubsystem sensorSubsystem = new SensorSubsystem();
 	public final static CameraSubsystem cameraSubsystem = new CameraSubsystem();
@@ -48,8 +48,8 @@ public class ControlInitializer {
 			liftUp= new JoystickButton(rightStick, 3);
 			liftDown=new JoystickButton(rightStick,2);
 		strafeSpeed=0;
-		liftUp.whenPressed( new LiftCommand(1));
-		liftDown.whenPressed(new LiftCommand(-1));
+		liftUp.whenPressed( new LiftCommand(1,1));
+		liftDown.whenPressed(new LiftCommand(-1,1));
 		//left is false right is true
 		strafeTriggerLeft.whenPressed(new StrafeCommand(-1));
 		strafeTriggerRight.whenPressed(new StrafeCommand(1));
@@ -114,10 +114,6 @@ public class ControlInitializer {
     	return limitSwitchSecond;
     }
     
-    public DigitalInput getLimitSwitchThird(){
-    	return limitSwitchThird;
-    }
-    
     public DigitalInput getLimitSwitchTop(){
     	return limitSwitchTop;
     }
@@ -127,6 +123,12 @@ public class ControlInitializer {
     }
 	public void setDirection(int dir) {
 		direction=dir;
+	}
+	public double getSpeed(){
+		return speed;
+	}
+	public void setSpeed(double d){
+		speed=d;
 	}
 }
 

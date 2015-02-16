@@ -14,40 +14,51 @@ public class LiftCommand extends Command {
 	private boolean finish;
 	private int direction;
 	private int dir;
-	public LiftCommand(int d) {
+	private int amount;
+	private int stop;
+	public LiftCommand(int d,int a) {
 		//requires(ControlInitializer.liftSubsystem);
 		finish = false;
 		dir = d;
+		amount =a;
 	}
 
 	protected void initialize() {
 		System.out.println("output initialize()");
+		
 		direction = Robot.oi.getDirection() + dir;
 		if(direction > 1) direction = 1;
 		if(direction < -1) direction = -1;
 		
-		finish=ControlInitializer.liftSubsystem.checkLimits( 0, direction);
+		if(direction==1) stop = Robot.oi.liftSubsystem.getLevel()+amount;
+		else if(direction==-1) stop=Math.abs(Robot.oi.liftSubsystem.getLevel()-amount);
+		
+		if(stop%4!=stop){
+			if(direction>0)stop =3;
+			else stop =0;
+		}
+		
 		Robot.oi.setDirection(direction);
 	}
 
 	protected void execute() {
 		ControlInitializer.liftSubsystem.startLift(direction);
+		ControlInitializer.liftSubsystem.getSwitches(direction);
 	}
 	
 	protected boolean isFinished(){
 		
-		return ControlInitializer.liftSubsystem.getSwitches(direction);
+		if(stop==Robot.oi.liftSubsystem.getLevel()||Robot.oi.getDirection()==0){
+			return true;
+		}
+		return ControlInitializer.liftSubsystem.checkLimits(direction);
 	}
 
 	protected void end() {
+		System.out.println("end Lift");
+		direction=0;
+		Robot.oi.setDirection(0);
 		ControlInitializer.liftSubsystem.stopLift();
-		
-		if (direction < 0&&ControlInitializer.liftSubsystem.getLevel()!=0) {
-			ControlInitializer.liftSubsystem.decreaseLevel();
-		}
-		else if (direction > 0&&ControlInitializer.liftSubsystem.getLevel()!=4) {
-			ControlInitializer.liftSubsystem.increaseLevel();
-		}
 	}
 	
 	protected void interrupted() {

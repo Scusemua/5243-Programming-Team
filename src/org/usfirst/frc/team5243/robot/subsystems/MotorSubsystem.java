@@ -3,6 +3,7 @@ package org.usfirst.frc.team5243.robot.subsystems;
 
 import org.usfirst.frc.team5243.robot.RobotMap;
 
+import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -14,11 +15,13 @@ public class MotorSubsystem extends Subsystem {
 	
 	private Victor middleMiddle1; //related to hdrive 
 	private Victor middleMiddle0; //related to hdrive 
+	private RobotDrive robot;
 
     public MotorSubsystem() {
 		System.out.println("MotorSystem constructor called");
 		middleMiddle1 = new Victor(RobotMap.middleMotor1);
 		middleMiddle0= new Victor(RobotMap.middleMotor0);
+		robot = new RobotDrive(RobotMap.frontLeftMotor,RobotMap.backLeftMotor,RobotMap.frontRightMotor,RobotMap.backRightMotor);
 	}
 
 	public void initDefaultCommand() {
@@ -30,6 +33,10 @@ public class MotorSubsystem extends Subsystem {
 	
 	public Victor getMiddleZero() {
 		return middleMiddle0;
+	}
+	public RobotDrive getRobot(){
+		return robot;
+		
 	}
 	
 }
