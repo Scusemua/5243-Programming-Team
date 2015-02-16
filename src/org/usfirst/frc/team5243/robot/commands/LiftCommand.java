@@ -60,9 +60,11 @@ public class LiftCommand extends Command {
 		Robot.oi.setDirection(0);
 		ControlInitializer.liftSubsystem.stopLift();
 	}
-	
-	protected void interrupted() {
 
+	protected void interrupted() {
+		
 	}
+	
+
 
 }
