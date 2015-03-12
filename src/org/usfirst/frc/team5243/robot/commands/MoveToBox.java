@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class MoveToBox extends Command {
 	private long time;
 	private double distance;
-    public MoveToBox() {
+   /* public MoveToBox() {
         requires(Robot.oi.sensorSubsystem);
         requires(Robot.oi.motorSubsystem);
     }
@@ -29,7 +29,7 @@ public class MoveToBox extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if(Robot.oi.sensorSubsystem.getDistance()<20) return true;//make 20 an constant
+    	if(Robot.oi.sensorSubsystem.getDistance()<20) return true;
     	
         return false;
     }
@@ -40,11 +40,36 @@ public class MoveToBox extends Command {
     	Robot.oi.setSpeed(getVelocity(time,System.currentTimeMillis(),distance,Robot.oi.sensorSubsystem.getDistance()));
     }
     public double getVelocity(long timeFirst,long timeLast, double distanceStart, double distanceEnd){
-    	return (distanceStart-distanceEnd)/(timeLast-timeFirst);
+    	return (timeLast-timeFirst)/(distanceStart-distanceEnd);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    }
+    }*/
+	@Override
+	protected void initialize() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	protected void execute() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	protected boolean isFinished() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	protected void end() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	protected void interrupted() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -16,12 +16,11 @@ public class MotorSubsystem extends Subsystem {
 	private Victor middleMiddle1; //related to hdrive 
 	private Victor middleMiddle0; //related to hdrive 
 	private RobotDrive robot;
-
     public MotorSubsystem() {
 		System.out.println("MotorSystem constructor called");
+    	robot = new RobotDrive(RobotMap.frontLeftMotor,RobotMap.backLeftMotor,RobotMap.frontRightMotor,RobotMap.backRightMotor);
 		middleMiddle1 = new Victor(RobotMap.middleMotor1);
 		middleMiddle0= new Victor(RobotMap.middleMotor0);
-		robot = new RobotDrive(RobotMap.frontLeftMotor,RobotMap.backLeftMotor,RobotMap.frontRightMotor,RobotMap.backRightMotor);
 	}
 
 	public void initDefaultCommand() {
@@ -36,8 +35,6 @@ public class MotorSubsystem extends Subsystem {
 	}
 	public RobotDrive getRobot(){
 		return robot;
-		
 	}
-	
 }
 

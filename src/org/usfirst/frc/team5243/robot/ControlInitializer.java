@@ -1,36 +1,40 @@
 package org.usfirst.frc.team5243.robot;
 
 
+import org.usfirst.frc.team5243.robot.commands.LowerLift;
+import org.usfirst.frc.team5243.robot.commands.RaiseLift;
+import org.usfirst.frc.team5243.robot.commands.StopLift;
+import org.usfirst.frc.team5243.robot.commands.StrafeCommand;
+import org.usfirst.frc.team5243.robot.subsystems.CameraSubsystem;
+import org.usfirst.frc.team5243.robot.subsystems.LiftLimits;
+import org.usfirst.frc.team5243.robot.subsystems.LiftSubsystem;
+import org.usfirst.frc.team5243.robot.subsystems.MotorSubsystem;
+
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Counter;
 
-import org.usfirst.frc.team5243.robot.commands.StrafeCommand;
-import org.usfirst.frc.team5243.robot.commands.StrafeSpeedCommand;
-import org.usfirst.frc.team5243.robot.commands.LiftCommand;
-import org.usfirst.frc.team5243.robot.subsystems.CameraSubsystem;
-import org.usfirst.frc.team5243.robot.subsystems.LiftSubsystem;
-import org.usfirst.frc.team5243.robot.subsystems.MotorSubsystem;
-import org.usfirst.frc.team5243.robot.subsystems.SensorSubsystem;
+
 
 public class ControlInitializer {
     private double strafeSpeed;
     
     private final Joystick leftStick = new Joystick(RobotMap.leftJoystick), rightStick = new Joystick(RobotMap.rightJoystick);
 
-    private final DigitalInput limitSwitchBottom = new DigitalInput(0); //Parameter is the channel
-    private final DigitalInput limitSwitchFirst = new DigitalInput(1);
+ /*   private final DigitalInput limitSwitchBottom = new DigitalInput(0); //Parameter is the channel
+    private final DigitalInput limitSwitchFirst = new DigitalInput(4);
     private final DigitalInput limitSwitchSecond = new DigitalInput(2);
-    private final DigitalInput limitSwitchTop= new DigitalInput(3);
+    private final DigitalInput limitSwitchThird = new DigitalInput(3);
+    private final DigitalInput limitSwitchTop= new DigitalInput(1);*/
     
     private int direction = 0;
-    private double speed = 0;
+    private double speed;
     
-    public final static SensorSubsystem sensorSubsystem = new SensorSubsystem();
 	public final static CameraSubsystem cameraSubsystem = new CameraSubsystem();
 	public final static MotorSubsystem motorSubsystem = new MotorSubsystem();
 	public final static LiftSubsystem liftSubsystem = new LiftSubsystem();
@@ -38,21 +42,25 @@ public class ControlInitializer {
 	//This is the limit switch. The constructor parameter is the channel its plugged into. 
 	//private final DigitalInput limitSwitch = new DigitalInput(1);
 	//private Encoder encoder = new Encoder(2,7); // constructor parameters will change
-	private Button strafeTriggerLeft, strafeTriggerRight, liftUp, liftDown;
+	private Button strafeTriggerLeft, strafeTriggerRight, liftUp, liftDown, stopLift;
 	
 	public ControlInitializer() {
+		speed=0;
 		System.out.println("controlInitializer");
-				//deleted speedUp and slowDown
 			strafeTriggerLeft = new JoystickButton(leftStick, 1); 
 			strafeTriggerRight = new JoystickButton(rightStick, 1);
 			liftUp= new JoystickButton(rightStick, 3);
 			liftDown=new JoystickButton(rightStick,2);
+			stopLift = new JoystickButton(leftStick,3);
+			
 		strafeSpeed=0;
-		liftUp.whenPressed( new LiftCommand(1,1));
-		liftDown.whenPressed(new LiftCommand(-1,1));
+		stopLift.whenPressed(new StopLift());
+		liftUp.whenPressed(new RaiseLift());
+		liftDown.whenPressed(new LowerLift());
 		//left is false right is true
 		strafeTriggerLeft.whenPressed(new StrafeCommand(-1));
 		strafeTriggerRight.whenPressed(new StrafeCommand(1));
+		liftSubsystem.setLimits(new LiftLimits());
 		
 	}
 	/**
@@ -102,7 +110,7 @@ public class ControlInitializer {
     	return strafeTriggerRight;
     }
     
-    public DigitalInput getLimitSwitchBottom(){
+   /* public DigitalInput getLimitSwitchBottom(){
     	return limitSwitchBottom;
     }
     
@@ -114,9 +122,13 @@ public class ControlInitializer {
     	return limitSwitchSecond;
     }
     
+    public DigitalInput getLimitSwitchThird(){
+    	return limitSwitchThird;
+    }
+    
     public DigitalInput getLimitSwitchTop(){
     	return limitSwitchTop;
-    }
+    }*/
     
     public int getDirection() {
     	return direction;

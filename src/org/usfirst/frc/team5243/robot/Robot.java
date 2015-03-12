@@ -18,8 +18,8 @@
 
 package org.usfirst.frc.team5243.robot;
 
+
 import org.usfirst.frc.team5243.robot.commands.AutonomousEasiest;
-import org.usfirst.frc.team5243.robot.commands.StrafeCommand;
 
 import com.ni.vision.NIVision;
 import com.ni.vision.NIVision.DrawMode;
@@ -28,7 +28,7 @@ import com.ni.vision.NIVision.ShapeMode;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -54,55 +54,32 @@ import edu.wpi.first.wpilibj.RobotDrive;
  */
 //>>>>>>> branch 'master' of https://github.com/Scusemua/5243-Programming-Team.git
 public class Robot extends IterativeRobot {
-	public static ControlInitializer oi=new ControlInitializer(); 
+	public static ControlInitializer oi=new ControlInitializer();
 	private double distToAutoZone;
 	private double liftDistance;
-	private AutonomousEasiest autoE;
+	private Command autonomousStart;
 	NIVision.Rect rect;
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
+    	
         // instantiate the command used for the autonomous period
+    	autonomousStart = new AutonomousEasiest();
     	System.out.println("robotInit() called");
         //Intialize the actual Robot
         oi.motorSubsystem.getRobot().setSafetyEnabled(false);
-       // oi.cameraSubsystem.initializeCam();
-        autoE = new AutonomousEasiest();
-        
+        oi.cameraSubsystem.initializeCam();
     }
 	
 
     public void autonomousInit() {
-        //robot.drive(1, 0);
-
-    	
-    /*	//method 2, documents folder -->AutoStrats "AutonomousMedium"
-     * oi.liftSubsystem.liftToLevel(0);
-    	robot.drive(1, 0);distToAutoZone = 140;
-    	oi.liftSubsystem.liftToLevel(2);
-    	robot.drive(1, 0);
-    	oi.setStrafeSpeed(.5);
-    	Timer.delay(4);
-    	oi.setStrafeSpeed(0);
-    	robot.drive(1);
-    */	
-    /*	//method 3, "AutonomousCarrying"
-     * robot.drive(1, 0);
-    	oi.liftSubsystem.liftToLevel(1);
-    	robot.drive(1, 0);
-    	oi.liftSubsystem.liftToLevel(0);
-    	robot.drive(-1, 0);
-    	robot.drive(1, 0);
-    	oi.liftSubsystem.liftToLevel(1);
-    	robot.drive(1, 45);
-    */	
-    	
+    	autonomousStart.start();
     }
     
     /**
-     * This function is called periodically during autonomous
+     * This function is called periodically during autonomous h
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
@@ -110,13 +87,6 @@ public class Robot extends IterativeRobot {
     }
     
     public void autonomousContinuous() {
-    	/*System.out.println("AutonomousContinuous called");
-    	if (distToAutoZone >= 0){
-    		robot.drive(1, 0);
-    		distToAutoZone --;
-    	}*/
-    	
-    	
     	
     	
     	
@@ -124,44 +94,31 @@ public class Robot extends IterativeRobot {
     
     public void teleopInit() {
     	System.out.println("teleopInit called");
+    	NIVision.IMAQdxStartAcquisition(oi.cameraSubsystem.getSession());
+
+    	rect = new NIVision.Rect(10, 10, 100, 100);
     }
     
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
     	oi.motorSubsystem.getRobot().tankDrive(oi.getLeftStick(), oi.getRightStick());
+    	
+        NIVision.IMAQdxGrab(oi.cameraSubsystem.getSession(), oi.cameraSubsystem.getFrame(), 1);
+        //NIVision.imaqDrawShapeOnImage(oi.cameraSubsystem.getFrame(), oi.cameraSubsystem.getFrame(), rect,DrawMode.DRAW_VALUE, ShapeMode.SHAPE_OVAL, 0.0f);
+        
+        CameraServer.getInstance().setImage(oi.cameraSubsystem.getFrame());
     }
    
     public void testInit() {
-    	// NIVision.IMAQdxStartAcquisition(oi.cameraSubsystem.getSession());
-
-//         rect = new NIVision.Rect(10, 10, 100, 100);
 
     }
     /**
      * This function is called periodically during test mode
      */
     public void testPeriodic() {
-    	LiveWindow.run();
-    	/*NIVision.IMAQdxGrab(oi.cameraSubsystem.getSession(), oi.cameraSubsystem.getFrame(), 1);
-        NIVision.imaqDrawShapeOnImage(oi.cameraSubsystem.getFrame(), oi.cameraSubsystem.getFrame(), rect,DrawMode.DRAW_VALUE, ShapeMode.SHAPE_OVAL, 0.0f);
-        */
-  //      CameraServer.getInstance().setImage(oi.cameraSubsystem.getFrame());
-        if (Robot.oi.getLimitSwitchBottom().get()) {
-			System.out.println("BottomSwitch pushed");
-			Robot.oi.liftSubsystem.getLiftMotor().set(.5);
-		}
-        if (Robot.oi.getLimitSwitchFirst().get()) {
-			System.out.println("first level pushed");
-			Robot.oi.liftSubsystem.getLiftMotor().set(0);
-		}
-        if (Robot.oi.getLimitSwitchSecond().get()) {
-			System.out.println("2nd level Pushed");
-			Robot.oi.liftSubsystem.getLiftMotor().set(-.5);
-		}
-        if (Robot.oi.getLimitSwitchTop().get()) {
-			System.out.println("TopSwitch Pushed");
-			Robot.oi.liftSubsystem.getLiftMotor().set(1);
-		}
+        LiveWindow.run();
+
+        
     }
     
     /**
@@ -170,12 +127,12 @@ public class Robot extends IterativeRobot {
      */
     @Override 
     public void disabledInit(){
-    //	NIVision.IMAQdxStopAcquisition(oi.cameraSubsystem.getSession());
+    	NIVision.IMAQdxStopAcquisition(oi.cameraSubsystem.getSession());
     }
     
     @Override 
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 	}
-   
+
 }

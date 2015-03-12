@@ -5,8 +5,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutonomousEasiest extends CommandGroup {
 	
 	public AutonomousEasiest(){
-		addSequential(new AutonomousStart());
-		addSequential(new Move(.5,0,0));
+		//addSequential(new RaiseLift());
+		addSequential(new Move(3250));//10^-3 |||| 5-> 5000
+		System.out.println("constructor autonomous");
 	}
 	
 	

@@ -1,5 +1,7 @@
 package org.usfirst.frc.team5243.robot.subsystems;
 
+import org.usfirst.frc.team5243.robot.RobotMap;
+
 import com.ni.vision.NIVision;
 import com.ni.vision.NIVision.Image;
 
@@ -21,11 +23,11 @@ public class CameraSubsystem extends Subsystem {
 	private Image frame;
     private CameraServer server;
     public void initializeCam(){
-       /* frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
+        frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
 
         // the camera name (ex "cam0") can be found through the roborio web interface
-        session = NIVision.IMAQdxOpenCamera("cam0",NIVision.IMAQdxCameraControlMode.CameraControlModeController);
-        NIVision.IMAQdxConfigureGrab(session);*/
+        session = NIVision.IMAQdxOpenCamera(RobotMap.camName,NIVision.IMAQdxCameraControlMode.CameraControlModeController);
+        NIVision.IMAQdxConfigureGrab(session);
     }
     public int getSession(){
     	return session;
@@ -33,6 +35,7 @@ public class CameraSubsystem extends Subsystem {
     public Image getFrame(){
     	return frame;
     }
+    
     
     
     

@@ -7,38 +7,30 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class Move extends Command {
-	long time;
-	long timeinit;
-    public Move(long t) {
-    	//time is in milliseconds
-        time = t;
+public class StopLift extends Command {
+
+    public StopLift() {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	System.out.println("Autonomous initialize");
-        timeinit = System.currentTimeMillis();
-    	Robot.oi.motorSubsystem.getRobot().drive(-.5, 0);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if((System.currentTimeMillis()-timeinit)>=time){
-    		System.out.println("autonomous is finished");
-    		return true;
-    	}
-        return false;
+    	Robot.oi.liftSubsystem.stop();
+    	System.out.println("One pushed");
+        return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.oi.motorSubsystem.getRobot().drive(0, 0);
     }
 
     // Called when another command which requires one or more of the same
